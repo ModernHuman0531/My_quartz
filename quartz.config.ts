@@ -17,7 +17,6 @@ const config: QuartzConfig = {
     },
     locale: "en-US",
     baseUrl: "/My_quartz/",
-    verbose: true,
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
@@ -70,7 +69,7 @@ const config: QuartzConfig = {
       Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
       Plugin.GitHubFlavoredMarkdown(),
       Plugin.TableOfContents(),
-      Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
+      Plugin.CrawlLinks({ markdownLinkResolution: "shortest", recursive: true }),
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
