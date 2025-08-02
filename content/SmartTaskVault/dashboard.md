@@ -1,6 +1,6 @@
 ---
 created: 2025-08-02T23:23
-updated: 2025-08-03T01:27
+updated: 2025-08-03T03:23
 ---
 
 > [!multi-column]
@@ -32,10 +32,18 @@ updated: 2025-08-03T01:27
 > >const all = dv.pages('"SmartTaskVault/tasks"').file.tasks.where(t => !t.completed);
 > > const rest = all.where(t => t.text.includes("#重要度3"));
 > > rest.forEach(t => dv.paragraph(`- [ ] ${t.text}`));
-> > 
 > > ```
 
+> >[!IMPORTANT] 🟢 完成任務(最近3項)
+> > ```dataviewjs
+const tasks = dv.pages('"SmartTaskVault/tasks"')
+  .file
+  .tasks
+  .where(t => t.completed)
+  .sort(t => -t.line) // 以行數代表完成時間
+  .slice(0, 3);
+>for (let t of tasks) {
+  dv.paragraph(`- 🟢 ${t.text}  —  *[${t.path}](obsidian://open?path=${encodeURIComponent(t.path)})*`);
+}
 
-
-
-> 
+> > ```
