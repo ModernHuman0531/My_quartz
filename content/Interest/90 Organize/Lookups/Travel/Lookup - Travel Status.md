@@ -1,0 +1,4 @@
+Booked
+Cancelled
+Over
+Planned
