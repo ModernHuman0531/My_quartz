@@ -17,7 +17,7 @@ const config: QuartzConfig = {
     },
     locale: "en-US",
     baseUrl: "modernhuman0531.github.io/My_quartz/",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    ignorePatterns: ["private", "templates", ".obsidian", "Template"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
