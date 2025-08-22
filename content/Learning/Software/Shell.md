@@ -1,3 +1,7 @@
+---
+created: 2025-08-03T14:22
+updated: 2025-08-22T15:43
+---
 2024-11-19 12:00
 
 Status:
@@ -85,4 +89,5 @@ drwxr-xr-x  2 dunkun dunkun 4096 11月  8 23:10 Videos
 * We can use `grep` to find the keyword in the content of file.
 * Normal syntax:`grep <keyword> <file-name>`
 * Advance usage:`ls/etc | grep network`:means search the file name contain **network**
+
 # Reference
