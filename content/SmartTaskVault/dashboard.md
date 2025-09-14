@@ -1,10 +1,15 @@
 ---
-created: 2025-08-02T23:23
-updated: 2025-08-03T03:23
+created: 2025-09-02T22:05
+updated: 2025-09-06T15:32
 ---
 
-> [!multi-column]
-
+> > [!IMPORTANT] 🔵 每日任務
+> > ```dataviewjs
+> > const all = dv.pages('"SmartTaskVault/tasks/Daily Tasks"').file.tasks.where(t => !t.completed);
+> > const main = all;
+> > main.forEach(t => dv.paragraph(`- [ ] ${t.text}`));
+> > ```
+> 
 > > [!IMPORTANT] 🔴 主要任務（最多2項）
 > > ```dataviewjs
 > > const all = dv.pages('"SmartTaskVault/tasks"').file.tasks.where(t => !t.completed);
@@ -13,7 +18,6 @@ updated: 2025-08-03T03:23
 > > if (main.length < 2) {
 > >   dv.paragraph(`➡️ 主要任務少於 2 個，可以從次要任務升級！`);
 > > }
-> > 
 > > ```
 > 
 > > [!IMPORTANT]  🟠 次要任務（最多3項）
@@ -45,5 +49,4 @@ const tasks = dv.pages('"SmartTaskVault/tasks"')
 >for (let t of tasks) {
   dv.paragraph(`- 🟢 ${t.text}  —  *[${t.path}](obsidian://open?path=${encodeURIComponent(t.path)})*`);
 }
-
 > > ```

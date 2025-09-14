@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-08-22T22:10
+updated: 2025-09-05T12:51
 title:
 ---
 2025-08-21 21:02
@@ -61,5 +61,5 @@ map ctrl+shift+r reload-config
 enable_audio_bell no
 ```
 # Reference
-[kitty terminal emulator website](https://sw.kovidgoyal.net/kitty/conf/#the-color-table)
+[kitty terminal emulator website](https://sw.kovidgoyal.net/kitty/overview/#other-keyboard-shortcuts)
 [Setting reference video](https://www.youtube.com/watch?v=U-2AB88_eUw)
