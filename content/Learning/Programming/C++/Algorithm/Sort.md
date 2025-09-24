@@ -1,15 +1,15 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-15T22:16
+updated: 2025-09-24T20:07
 title:
 ---
 2025-09-13 15:49
 
 Status:
 
-Tags:
+Tags:[[Array and Linked list]],
 
-**目錄**
+**目錄:**
 - [[#Selection sort|Selection sort]]
 	- [[#Selection sort#Champion problem|Champion problem]]
 	- [[#Selection sort#Selection sort|Selection sort]]
@@ -19,11 +19,18 @@ Tags:
 - [[#Merge sort|Merge sort]]
 	- [[#Merge sort#Merge|Merge]]
 	- [[#Merge sort#Merge sort|Merge sort]]
+- [[#Young's Tabelau|Young's Tabelau]]
+	- [[#Young's Tabelau#Search|Search]]
+	- [[#Young's Tabelau#Insertion|Insertion]]
 - [[#Heap and Heap sort|Heap and Heap sort]]
 	- [[#Heap and Heap sort#Heap|Heap]]
 	- [[#Heap and Heap sort#Heap sort|Heap sort]]
 - [[#Quick Sort|Quick Sort]]
 - [[#STL sort usage|STL sort usage]]
+	- [[#STL sort usage#Compare function原理與多重比較|Compare function原理與多重比較]]
+		- [[#Compare function原理與多重比較#多重排序|多重排序]]
+
+
 
 
 
@@ -153,10 +160,215 @@ void merge_sort(int* arr, int n){
 * 複雜度推算: 假設merge_sort n個花的時間是T(n)，由實做可以得出$$T(n)=2T\left( \frac{n}{2} \right)+n$$
 這是一個樹結構，**每一層都會花n來merge**，每個節點都可以分成兩個子節點直到n變成1，代表共有x層，2^x=n，x=log(n)，故merge sort複雜度為:$$O(n)=n\log(n)$$
 ![[merge_comp.png]]
-## Heap and Heap sort
-### Heap
+## Young's Tabelau
+* 對於已經sorted的array，**searching 的complexity是O(logn)**, insert的complexity是O(n)，對於還沒sorted的array，searching的complexity是O(n)，insertion的complexity是O(1)，那我們是否有在searching跟insert都表現平均的排序法呢=>Young's tableau!!!
+* `M*N Young Tableau` 代表一個M乘N矩陣，**每個row跟column(從左到右從上到下)數字要是increasing order**，這是楊表最重要的規則
+### Search
+![[Young search.png]]
+* Search時，我們會從右上角開始比，如果目標數值比目前位置大，往下走，比現在位置小，則往左走，如果超過邊界仍沒找到則回傳否
+* 實做:
+```c++
+bool search(vector<vector<int>>& tableau,int value){
+    // Search forom the top right to buttom left
+    int i=0,j=tableau[0].size()-1;
+    if(tableau.empty()){
+        return false;
+    }
+    while(i<=(tableau.size())-1&&j>=0){
+        if(tableau[i][j]>value){
+            j--; //go left
+        }
+        else if(tableau[i][j] < value){
+            i++;
+        }
+        else{
+            return true;
+        }
+    }
+    return false;
+}
+```
+在search裡要找到目標在`M*N楊表`花最多N+M-1步，所以search的複雜度是:**$$O(n)=\sqrt{ n }$$
+### Insertion
+![[Young insertion.png]]
+* 插入規則: 從**最右下角開始插入**想要插入的數字，當楊表還沒滿時我們以**INT_MAX**來填充剩餘部份，每次都跟現在位置的左邊跟上面進行比較，當: 
 
+| 情況       | 動作                               |
+| -------- | -------------------------------- |
+| 只有左邊比現在大 | 跟左邊交換後繼續以左邊位置insert(確認仍維持楊表規則)   |
+| 只有上面比現在大 | 跟上面交換後繼續以上面位置insert(確認仍維持楊表規則)   |
+| 兩邊都比現在大  | 比較上面跟左邊看哪個比較大就跟現在這個交換，然後繼續insert |
+```c++
+#include <iostream>
+#include <climits>
+#include <cmath>
+#include <vector>
+
+using namespace std;
+void insertion(vector<vector<int>>& tableau,int i,int j){
+    // Use i,j to keep track of value is obey the rule or not
+    if(i==0&&j==0){return;}// Base case
+    // Have to exclude i=0 or j=0 case in case of system check ther value like tableau[-1][0]
+    if(i==0){
+        if(tableau[i][j]<tableau[i][j-1]){ //Left larger than right
+            swap(tableau[i][j-1],tableau[i][j]);
+            insertion(tableau, i,j-1);
+        }
+        return;
+    }
+    if(j==0){
+        if(tableau[i][j]<tableau[i-1][j]){
+            swap(tableau[i-1][j],tableau[i][j]);
+            insertion(tableau,i-1,j);
+        }
+        return;
+    }
+    if((tableau[i-1][j]>tableau[i][j])&&(tableau[i][j-1]>tableau[i][j])){
+        // Choose big one to swap
+        if(tableau[i-1][j]>tableau[i][j-1]){
+            swap(tableau[i][j],tableau[i-1][j]);
+            insertion(tableau,i-1,j);
+        }
+        else{
+            swap(tableau[i][j-1],tableau[i][j]);
+            insertion(tableau,i,j-1);
+        }
+    }
+    else if(tableau[i-1][j]>tableau[i][j]){
+        swap(tableau[i-1][j],tableau[i][j]);
+        insertion(tableau,i-1,j);
+    }
+    else if(tableau[i][j-1]>tableau[i][j]){
+        swap(tableau[i][j-1],tableau[i][j]);
+        insertion(tableau,i,j-1);
+    }
+}
+vector<vector<int>> insert(vector<int> input){
+    int M=ceil(sqrt(input.size()));
+    int N=M;
+    vector<vector<int>> tableau(M,vector<int>(N,INT_MAX));
+    for(auto &element: input){
+        // If buttom right isn't INT_MAX, means tableau is full 
+        if(tableau[M-1][N-1]!=INT_MAX){
+            cout<<"Tableau are already filled\n";
+        }
+        else{
+            // insertion is always start from buttom right
+            tableau[M-1][N-1]=element;
+            insertion(tableau,M-1,N-1);
+        }
+    }
+    return tableau;
+}
+
+```
+* 在insert裡要插入目標在`M*N楊表`花最多N+M-1步，所以insert的複雜度是:$$O(n)=\sqrt{ n }$$
+## Heap and Heap sort
+ Heapify 跟Buildheap的差別很重要
+### Heap
+* Heap(堆積)是一個二樹狀的資料結構(除了最底層)，但通常不會以樹的資料結構進行實做，而是以array/vector加上heap的規則進行實做
+* Heap規則: (兩個是一樣的規則只是表達方式不同)
+	* `parent[i]=[i/2]` :Node i的parent 會是`[i/2]`
+	* `left[i]=2i, right[i]=2i+1` :Node i的左子節點是2i，右子節點2i+1
+![[heap.png]]
+* 我們以max heap為例，max heap的規則是`array[parent]>array[child]`，我們用heapify來維持一個節點開始遵守heap的規則
+* Heapify(i): Heapify function是要讓點i跟他的children保持heap的規則，但有個**前提是左subtree跟右subtree都要已經是max heap了**(修正只有一個點壞heap規則的function)
+	* 以下圖為例，只有第一個點沒有遵守規則，所以看左右子節點選大的交換，換完後`A[1],A[2],A[3]`有遵守heap規則，但`A[3]` 後的subtree又沒遵守heap，所以會選一邊一直遞迴直到樹的底部，而深度是log(n)，代表**每次heapify的複雜度是log(n)。**
+![[heapify.png]]
+* Build heap則是用遞回來建構整個heap，先確認左邊樹跟右邊樹已經是max heap，最後用本節點做heapify
+* Extract max則是將最上面的點儲存後傳，將heap的最後一個點拉上電一個點並刪掉最後一點，然後對最頂點做heapify
+* Heap 實做
+```c++
+#include <iostream>
+#include <climits>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Heap{
+    private:
+        vector<int> array;
+    public:
+        Heap(){
+            array.push_back(INT_MAX);
+        }
+        void insert(int input){
+            array.push_back(input);
+        } 
+        void heapify(int i){
+            int parent=i;
+            int left=2*i,right=2*i+1;
+            int max=parent; 
+            if((left<array.size())&&(array[max]<array[left])){
+                max=left;
+            }
+            if((right<array.size())&&(array[max]<array[right])){
+                max=right;
+            }
+            if(max!=parent){
+                // parent swap with max and do heapify recursively.
+                swap(array[parent],array[max]);
+                heapify(max);
+            }
+        }
+        void buildHeap(int i){
+            if(i>=array.size())return;
+            buildHeap(2*i);
+            buildHeap(2*i+1);
+
+            heapify(i);
+        }
+        void printHeap(){
+            for(int i=1;i<array.size();++i){
+                cout<<array[i]<<" ";
+            }
+            cout<<"\n";
+        }
+        int extractMax(){
+            int max=array[1];
+            array[1]=array[array.size()-1];
+            array.pop_back();
+            heapify(1);
+            return max;
+        }
+}; 
+```
+* Heap複雜度計算，T(n)=2T(n/2)+log(n)，(T(n)代表左子樹跟右子樹變成max heap的時間,log(n)則是本節點heapify花的時間)，根據master theorem，建立heap的複雜度是$$O(n)=n$$
 ### Heap sort
+* 實做就是一直使用extract max將得到的結果存進容器裡直到Heap裡剩一個元素為止並回傳
+* 實做:
+```c++
+vector<int> HeapSort(vector<int> input){
+    Heap heap;
+    vector<int> output;
+    for(const auto& number: input){
+        heap.insert(number);
+    }
+    heap.buildHeap(1);
+    for(int i=0;i<input.size();++i){
+        output.push_back(heap.extractMax());
+    }
+    return output;
+}
+```
+* 複雜度就是extract max做n次，而extract max讀複雜度等於heapify的複雜度(log(n))，所以heap sort的複雜度是$$O(n)=n\log(n)$$
+* Heap STL: STL 裡也有一個Heap稱為priority_queue，記的要`#include <queue>`
+
+| 寫法                       | 功能              |
+| ------------------------ | --------------- |
+| `priority_queue<int> pq` | 宣告一個整數的max-heap |
+| `push()`                 | 將資料丟進heap裡      |
+| `pop()`                  | extract max功能相同 |
+| `top()`                  | heap裡最大元素的值     |
+| `size()`                 | heap大小          |
+* 不同資料結構對不同動作複雜度比較:
+
+| n elements     | search cost                 | insert cost         | extract max     |
+| -------------- | --------------------------- | ------------------- | --------------- |
+| sorted array   | O(log(n)) [[Binary search]] | O(n)                | O(n)            |
+| unsorted array | O(n)                        | O(1)                | O(n)            |
+| young tableau  | $$O(n)=\sqrt{ n }$$         | $$O(n)=\sqrt{ n }$$ | ?               |
+| heap           | ?                           | $$O(n)=\log(n)$$    | $$O(n)=\log n$$ |
 
 ## Quick Sort
 
@@ -184,6 +396,23 @@ int main(){
 	// Method 2. Have compare function
 	sort(vec2.begin(), vec2.end(), compare); //vec2={5,4,3,2,1} 
 	return 0;
+}
+```
+### Compare function原理與多重比較
+* Compare function型態: `bool cmp(const T& a, const T& b)`
+* 規則:
+	* 當compare function回傳**True**時，**代表a要排在b前面**，**False**則是a不該在b前面
+	* 但不可以同時cmp(a,b)跟cmp(b,a)都是true
+#### 多重排序
+* 當遇到多重排序時，compare function可以用if來決定要在哪一個項目上進行比較，因為compare 的項目也有優先程度，應該先把優先度高的把在前面，如果相同在繼續比。
+* 舉裡來說，我想要排學生的先後順序，條件是1.先比score(降序)2.score相同則比age(升序)3. 再相同則比名子字母序，則compare function的寫法為:
+```c++
+bool compare(const student& a, const student& b){
+	if(a.score!=b.score)
+		return a.score>b.score
+	if(a.age!=b.age)
+		return a.age<b.age;
+	return a.name<b.name;
 }
 ```
 # Reference

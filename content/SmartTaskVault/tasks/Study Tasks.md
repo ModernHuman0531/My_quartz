@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T03:28
-updated: 2025-09-15T16:22
+updated: 2025-09-24T19:20
 title: Studt Tasks
 ---
 ## 任務列表
@@ -17,20 +17,32 @@ title: Studt Tasks
 	- [ ] Sorting 
 	- [ ] Maps and Hash table
 	- [ ] Graph algorithms
-- [ ]  演算法HW1 #重要度2  
+- [x] 演算法HW1(9/22) #重要度1 ✅ 2025-09-24
+- [ ] 演算法HW1(pE,pF)　#重要度2 
 - [x] ML hw1 #重要度1 ✅ 2025-09-06
 - [x] ML 補充影片(一) #重要度1 ✅ 2025-09-04
 - [x] ML week 1 note #重要度1 ✅ 2025-09-04
 - [x] 日本現勢-線上小考week1 #重要度1 ✅ 2025-09-14
 - [x] ML week2 補充影片(claude 上) #重要度1 ✅ 2025-09-13
-- [ ] ML week2 note(9/22) #重要度2 
-- [ ] ML homework 2 (9/28)
+- [x] ML week2 note(Linear regression) #重要度1 ✅ 2025-09-21
+- [ ] ML week2 note(Gradient descent) #重要度3 
+- [ ] ML week3 note(Bias and variance)
+- [x] ML homework 2 (9/28) #重要度1 ✅ 2025-09-24
+- [ ] ML homework 3(10/6)
 - [ ] 演算法筆記
-	- [ ] Basics Sorting #重要度1 
-	- [ ] Heap and heapsort #重要度1 
-	- [ ] Divide and Quicksort #重要度3 
+	- [x] Basics Sorting #重要度1 ✅ 2025-09-15
+	- [x] Heap and heapsort #重要度1 ✅ 2025-09-17
+	- [ ] Divide and Quicksort #重要度1 
+	- [x] Binary search 實做(HW1很常用到) #重要度1 ✅ 2025-09-17
 	- [x] STL sort usage and implement #重要度3 ✅ 2025-09-14
-- [ ] 機器人學chap2筆記 #重要度3 
-- [ ] 日本現勢-線上小考quiz2 #重要度3 
+	- [ ] Linear time sorting
+	- [ ] Tree(BST and Red Black tree)
+- [ ] 機器人學chap2筆記 #重要度3
+- [ ] 機器人學HW1(10/16)
+- [x] 日本現勢-線上小考quiz2 #重要度1 ✅ 2025-09-22
+- [ ] 日本現勢-線上小考quiz3
+- [x] g-code期中考筆記 #重要度1 ✅ 2025-09-22
+- [ ] 化學實驗預報1　#重要度1 
+
 ---
 

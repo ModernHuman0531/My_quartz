@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-13T17:05
+updated: 2025-09-24T01:04
 title:
 ---
 2025-09-02 21:31
@@ -23,6 +23,7 @@ Tags:
 * 簡單題一定要完成，中等題至少要寫一題
 * 等解答出來後一定要搞懂思路跟用到的技巧後記下來並自己做一次，不懂的助教時間一定要去詢問
 * Homework OJ website: https://114algo.cs.nycu.edu.tw/ 
+* 助教作業詳解:https://www.notion.so/Lab-Solution-Introduction-to-Algorithm-2778f0b8782c800da165e3bdb0590310
 ## 基本先備知識(大幅提昇編輯速度)
 *  萬用標頭檔
 	* 在c++中往往要引入很多標頭檔才能使用函數，像是要``<iostream>``才能做輸入輸出，要``<sort>``才能用sort等等

@@ -1,8 +1,12 @@
+---
+created: 2025-09-15T22:18
+updated: 2025-09-17T15:44
+---
 2024-11-14 16:35
 
 Status:
 
-Tags:[[Tree]],[[python]]
+Tags:[[Learning/Programming/python/Tree]],[[python]]
 
 # Method of solving problem
 * Idea:

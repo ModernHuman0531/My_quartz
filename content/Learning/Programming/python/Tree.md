@@ -1,8 +1,12 @@
+---
+created: 2025-09-15T22:18
+updated: 2025-09-17T15:44
+---
 2024-11-14 16:16
 
 Status:
 
-Tags:[[Tree]]
+Tags:[[Learning/Programming/python/Tree]]
 
 # Tree
 * Tree is a data structure that have label and branches, which branches is  `[]` or a tree.

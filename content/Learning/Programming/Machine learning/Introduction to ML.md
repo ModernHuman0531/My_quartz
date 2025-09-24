@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-04T22:29
+updated: 2025-09-20T16:20
 title:
 ---
 2025-09-03 22:38
@@ -8,6 +8,21 @@ title:
 Status:
 
 Tags:
+目錄:
+- [[#什麼是Machine Learning|什麼是Machine Learning]]
+	- [[#什麼是Machine Learning#如何找到目標的function呢|如何找到目標的function呢]]
+- [[#Machine Learning Road Map|Machine Learning Road Map]]
+	- [[#Machine Learning Road Map#Supervised Learning|Supervised Learning]]
+		- [[#Supervised Learning#Regression|Regression]]
+		- [[#Supervised Learning#Classification|Classification]]
+		- [[#Supervised Learning#Deep learning|Deep learning]]
+		- [[#Supervised Learning#Structured learning|Structured learning]]
+	- [[#Machine Learning Road Map#Semi-supervised learning|Semi-supervised learning]]
+	- [[#Machine Learning Road Map#Transfer learning|Transfer learning]]
+	- [[#Machine Learning Road Map#Unsupervised learning|Unsupervised learning]]
+	- [[#Machine Learning Road Map#Reinforcement learning|Reinforcement learning]]
+- [[#Dataset Splitting and Data leakage|Dataset Splitting and Data leakage]]
+	- [[#Dataset Splitting and Data leakage#Data leakage|Data leakage]]
 
 # Introduction to ML
 學習重點

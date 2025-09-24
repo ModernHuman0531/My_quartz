@@ -1,14 +1,14 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-22T12:36
+updated: 2025-09-24T19:53
 title:
 ---
-{{date}} {{time}}
+2025-09-24 19:53
 
 Status:
 
 Tags:
 目錄:
-# {{Title}}
+# Divide and Conquer
 
 # Reference

@@ -1,14 +1,14 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-22T12:36
+updated: 2025-09-20T14:10
 title:
 ---
-{{date}} {{time}}
+2025-09-20 14:10
 
 Status:
 
 Tags:
-目錄:
-# {{Title}}
+
+# Bias and Variance
 
 # Reference
