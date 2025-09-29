@@ -1,13 +1,13 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-21T23:40
+updated: 2025-09-27T11:34
 title:
 ---
 2025-09-10 12:56
 
 Status:
 
-Tags:
+Tags:[[Homework 2]]
 # Linear regression and Gradient descent
 老師投影片重點
 ### **1. 線性回歸基礎**
@@ -109,7 +109,7 @@ L(f)=\sum^{10}_{n=1} (\hat{y}-f(x^{n}_{cp}))^2 \\ L(w,b)=\sum^{10}_{n=1} (\hat{y
 * **Regularization是一種重新定義loss function的方法**，可以減少高次階model的overfitting，我們將新的loss function定義為:$$L=\sum_{n}(\hat{y}-(w_{i}x_{i}+b))^2+\lambda \sum (w_{i})^2$$，多考慮這樣向的原因是我們希望loss function變得平滑一點，因為高階model比較容易受到noise(雜訊)的影響，而加上後面那一項會讓loss function傾向取得較小的`wi`值
 * 後面那項與`b`沒關係是因為那是截距與函數的陡峭程度無關
 * 而為啥`wi`越小越不會受到雜訊影響是因為:$$y+\sum(w_{i}\Delta x_{i})=b+\sum(w_{i}(x_{i}+\Delta x_{i})$$，當`wi`越小越不會受到`Δxi`的影響。
-## Gradient in math
+
 ---
 # Reference
 [Normal equatoin推導](https://medium.com/@gatorsquare/ml-normal-equation-%E6%AD%A3%E8%A6%8F%E6%96%B9%E7%A8%8B%E5%BC%8F-9f1c09de4217)

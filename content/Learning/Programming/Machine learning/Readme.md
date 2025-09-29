@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-03T22:37
+updated: 2025-09-27T12:05
 title:
 ---
 2025-08-29 19:12
@@ -18,3 +18,5 @@ Tags:
 [李宏毅教授yt影片連結](https://www.youtube.com/playlist?list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49)
 [zuvio website link]()
 [李宏毅教授2017 => ML 大多是基本](https://speech.ee.ntu.edu.tw/~hylee/ml/2017-fall.php)
+[李宏毅2021(補充，多是DL內容j)](https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.php)
+[Latex 整理](https://hackmd.io/@CynthiaChuang/Basic-LaTeX-Commands)

@@ -1,13 +1,13 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-24T20:07
+updated: 2025-09-26T00:52
 title:
 ---
 2025-09-13 15:49
 
 Status:
 
-Tags:[[Array and Linked list]],
+Tags:[[Array and Linked list]],[[Divide and Conquer]]
 
 **目錄:**
 - [[#Selection sort|Selection sort]]
@@ -25,10 +25,15 @@ Tags:[[Array and Linked list]],
 - [[#Heap and Heap sort|Heap and Heap sort]]
 	- [[#Heap and Heap sort#Heap|Heap]]
 	- [[#Heap and Heap sort#Heap sort|Heap sort]]
-- [[#Quick Sort|Quick Sort]]
+- [[#Quick Sort and Quick select|Quick Sort and Quick select]]
+	- [[#Quick Sort and Quick select#Quick sort|Quick sort]]
+		- [[#Quick sort#Running time|Running time]]
+		- [[#Quick sort#The power of randomness|The power of randomness]]
+		- [[#Quick sort#Selection problem|Selection problem]]
 - [[#STL sort usage|STL sort usage]]
 	- [[#STL sort usage#Compare function原理與多重比較|Compare function原理與多重比較]]
 		- [[#Compare function原理與多重比較#多重排序|多重排序]]
+
 
 
 
@@ -370,10 +375,105 @@ vector<int> HeapSort(vector<int> input){
 | young tableau  | $$O(n)=\sqrt{ n }$$         | $$O(n)=\sqrt{ n }$$ | ?               |
 | heap           | ?                           | $$O(n)=\log(n)$$    | $$O(n)=\log n$$ |
 
-## Quick Sort
-
+## Quick Sort and Quick select
+### Quick sort
+* Quick sort 的概念是選一個pivot(先假設選容器裡最後一個element)作為基準，比他大的放在他右邊，小於等於他的則放在他左邊，然後對他左邊的array跟右邊的array再做Quicksort(**他自己不用，因為已經是正確的位置了**)，遞迴中止條件則是當array裡只有他一個人的時候就回傳
+	* 實做方法1(額外多O(runtime)空間)
+		```c++
+	void Quicksort(int *array,int n){
+		if(n<=1)return;
+		int pivot=array[n-1];
+		int left=0,right=n-1;
+		int* buf=int new[n];
+		for(int i=0;i<n-1;++i){
+			if(array[i]<=pivot){
+				buf[left]=array[i];
+				left++;
+			}
+			else{
+				buf[right]=array[i];
+				right--;
+			}
+			buf[left]=pivot;
+		}
+		memcpy(array,buf,sizeof(array[0])*n);
+		delete[] buf;
+		Quicksort(array,left);
+		Quicksort(array_left+1,n-left-1);
+	}
+	```
+	 ![[Quicksort1.jpg]]
+	* 實做方法2(額外空間為O(1))被稱為**In-placed quicksort**:
+		* 實做步驟與原理：
+		* 用一個額外的變數(slast)來追蹤pivot的位置(有幾個比pivot小的數，pivot的位置就應該在他們後面)
+		* 從頭開始loop整個array，當遇到小於等於pivot時，slast指的資料跟現在loop到的資料交換，slast往右指一個(slast++)
+		* 大於則不做事，換到最後一個(pivot位置)換完後，slast左邊都是比pivot小，右邊都是比pivot大的
+```c++
+void Quicksort(int *array,int n){
+    if(n<=1) return;
+    int slast=0;
+    int pivot=array[n-1];
+    for(int i=0;i<n;++i){
+        if(array[i]<=pivot){
+            swap(array[slast],array[i]);
+            slast++;
+        }
+    }
+    Quicksort(array,slast-1);
+    Quicksort(array+slast,n-slast);
+}
+```
+#### Running time
+* Quicksort 在大部份的case的時間，不論是(`S:L`=1:1 or `S:L`=9:1)，的時間複雜度幾乎都是**O(nlogn)**
+* 但在最爛的case，例如(n,n-1,n-2,...,1)時
+$$\begin{cases} 
+T(n)=T(n-1)+O(n),n\geq2 \\
+T(n)=1,n=1
+\end{cases} 
+$$假設c1>O(n)，c2>O(1)，c=max(c1,c2)
+$$\begin{cases}
+T(n)\leq T(n-1)+cn,n\geq2 \\
+T(n)\leq c
+\end{cases}$$
+這個複雜度是
+$$T(n)\leq T(n-1)+cn\leq T(n-2)+cn+c(n-1)\leq\dots\leq c(n+(n-1)+\dots+1)\leq O(n^2)$$
+* 在都選最後一個當pivot的前提下，quick sort的複雜度為:
+$$n\log n\leq O(n)\leq n^2$$
+#### The power of randomness
+* 為了將最差的case發生機率降到最低，要一個好的分割，因此我們要隨機決定pivot的點，那個點只要能分割成`[1/4,3/4]`就稱為一個好的分割，只要選的pivot能將array分割成`[1/4,3/4]`幾乎就可以確定Qucik sort的時間複雜度為O(nlogn)
+#### Selection problem
+* Quick Select原理:隨機選一個pivot如果數值小於等於pivot，則將他歸類在S(index 0-slast-1都在S)，大於pivot則歸類在L(Slast-n在L)，令一個變數**slast來計算<=pivot的個數**，如果`slast<k`代表第k個不在S，則繼續遞迴L，如果恰好等於k直接回傳pivot，如果小於則直接遞迴S
+* 如果每次都是好的分割複雜度為
+$$\begin{aligned}
+O(n)=n+\left( \frac{3}{4} \right)n+\left( \frac{3}{4} \right)^2n+\dots\leq_{}4n＝O(n)
+\end{aligned}$$
+* 如果每次都是bad case的話複雜度則是
+$$O(n)=n+n-1+\dots_{}+1=O(n^2)$$
+* 實做
+```c++
+int Quickselect(int *array,int n,int k){
+	if(n==1){
+		if(k==1)
+			return array[0];
+	}
+	int pivot=array[rand()%n];
+	int slast=0;
+	for(int i=0;i<n;++i){
+		if(array[i]<=pivot){
+			swap(array[i],array[slast]);
+			slast++;
+		}
+	}
+	if(slast<k)
+		return Quickselect(array+slast,n-slast,k-slast);
+	else if(slast=k)
+		return pivot;
+	else
+		return Quickselect(array,slast,k); 
+}
+```
 ## STL sort usage
-* 因為排序演算法太長使用了，因此我們通常不會自己實做，而是使用STL裡已經幫我們寫好的**std::sort**
+* 因為排序演算法太長使用了，因此我們通常不會自己實做，而是使用STL裡已經幫我們寫好的**std::sort**(背後原理是用Quick sort進行實做)
 * 使用時要`#include<algorithm>`
 * **std::sort**的複雜度為**O(nlogn)**
 * 語法: `sort(container.begin(), container.end(), comparefunction())`
@@ -418,3 +518,4 @@ bool compare(const student& a, const student& b){
 # Reference
 [memcpy用法](https://shengyu7697.github.io/cpp-memcpy/)
 [楊表實做](https://www.techiedelight.com/young-tableau-insert-search-extract-min-delete-replace/)
+[in order Quick sort](https://ithelp.ithome.com.tw/articles/10278644)
