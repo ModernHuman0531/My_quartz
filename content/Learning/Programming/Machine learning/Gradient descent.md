@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-27T17:22
+updated: 2025-09-30T13:15
 title:
 ---
 2025-09-27 11:35
@@ -101,6 +101,7 @@ L(\theta)&=(\hat{y}-(b+w_{i}x_{i}))^2 \\
 ![[Stochastic.png]]
 ## Tip 3. Feature scaling
 * 當feature的差距很大時，如下圖，當w2有小小的波動都會對Loss function產生較大的影響，當我們畫出等高線時便會發現呈現扁橢圓形，在w1跟w2方向上所需要的Learning rate差距很大，因此較難走到最佳解，但在經過scaling後變化發現成圓形，兩個參數所需的Learning rate也大致相同，可以很快的到達最低點
+* 當是狹長橢圓行時，參數更新是沿著等高線走但不是往中心走，所以要花更多時間到最低點，但當經過scaling過後，沿著等高線走也會往中心前進，因此更新速率會較快
 * 效果可以看[[Homework 2]]的第4題
 ![[feature_scaling.png]]
 * Scaling的方法

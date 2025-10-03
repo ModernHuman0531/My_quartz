@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-26T00:52
+updated: 2025-10-01T19:49
 title:
 ---
 2025-09-13 15:49
@@ -30,15 +30,13 @@ Tags:[[Array and Linked list]],[[Divide and Conquer]]
 		- [[#Quick sort#Running time|Running time]]
 		- [[#Quick sort#The power of randomness|The power of randomness]]
 		- [[#Quick sort#Selection problem|Selection problem]]
+- [[#Linear-time sort|Linear-time sort]]
+	- [[#Linear-time sort#Comparsion-based sorting's limitation|Comparsion-based sorting's limitation]]
+	- [[#Linear-time sort#Counting sort|Counting sort]]
+	- [[#Linear-time sort#Radix sort|Radix sort]]
 - [[#STL sort usage|STL sort usage]]
 	- [[#STL sort usage#Compare function原理與多重比較|Compare function原理與多重比較]]
 		- [[#Compare function原理與多重比較#多重排序|多重排序]]
-
-
-
-
-
-
 
 # Sort
 ## Selection sort
@@ -472,6 +470,109 @@ int Quickselect(int *array,int n,int k){
 		return Quickselect(array,slast,k); 
 }
 ```
+## Linear-time sort
+### Comparsion-based sorting's limitation
+* 上面我們所提到的sorting方法都是**Comparsion_based sorting**，也就是通過與別的元素比較(誰大誰小)來決定每個元素需要待的位置。
+![[quickyesno.png]]
+* 誰大誰小來決定位置本質上是一個yes/no問題，如果小於等於我現在這個元素則應該在我左邊，大於則應該在我右邊，而恰好**decision tree**能將這種yes/no問題所有可能性全都表現出來，代表**所有的comparsion_based sorting 都可以被用decision tree表達**
+* Decision tree簡介
+	* Decision tree是一種二元樹結構，每個節點(node)都是一個yes/no問題
+	* Decision tree的leaf都是一種結果，因此不同的輸入恰好會對應不同的路徑
+* Quciksort 用decision tree來表達，當小於等於pivot會被放在L，而大於pivot則會在R，而每隔leaf則對應著不同大小關係所產生的結果
+![[Decision_tree_alo.png]]
+* Decision tree最糟糕的case是running time=Ω(length of the path)=Ω(Depth of the tree)，我們現在就是要來推導最差的case所需花的時間
+* 藉由Decision tree特性
+	* Decision tree的leaf數量代表有幾種不同的可能性，n個元素的排組代表最多有n!種可性，代表有**n!個leaf**
+	* 因為decision tree是一個二元樹，因此我們可以根據leaf的數量來求解深度，**depth=log(n!)**
+$$\begin{aligned}
+Ω(n)&=Ω(Depth)=Ω(\log(n!)), By\:stirling's\:approx\: :n!=\left( \frac{n}{e} \right)^n \\
+&=Ω(n\log(n))
+\end{aligned}$$
+* 得到所有的comparsion_based sorting的最差case至少要花O(nlog(n))。
+### Counting sort
+* 在0-C的輸入數字範圍裡想要排序，我們要有C+1個bucket(**用queue實做的**)，掃過原本的array，計算每一個數字的個數(存在cnt array)之後，在掃過cnt array根據每個數字的個數放進去原本的array裡
+* 缺點: 當輸入的範圍遠大於輸入的個數時，會導致我們要做很多個bucket但大部份的bucket都沒有用到
+```c++
+const int C=10; //自己設定最大值是多少
+void counting_sort(int *A,int n){
+	// 紀錄0-C每個數字的個數
+	static int cnt[C+1];
+	// 掃過原本arrat來計算數字個數
+	for(int i=0;i<n;++i){
+		cnt[A[i]]+=1;
+	}
+	// 紀錄現在的位置
+	int current=0;
+	for(int i=0;i<=C;++i){
+		while(cnt[i]>0){
+			// 計算個數，小於等於0才跳出迴圈
+			A[current]=i;
+			current++;
+			cnt[i]-=1;
+		}
+	}
+	return;
+}
+```
+* Counting sort的時間複雜度是O(n)。
+### Radix sort
+* 是counting sort的進階版，最常用的版本是從最後一位開始做counting sort，接下來是倒數第二位做counting sort一直做到第一位數
+![[radix1.png]] 
+![[radix2.png]]
+![[radix3.png]]
+* 看每個位數進行counting sort可以表示成以10為基底做counting sort
+	* bucket會有10個
+	* 要做3次循環才能排序好
+	* 每次循環需要的時間就是需要排序的個數
+* 我們可依此類推推導不同的基底r，與要做幾次循環d，而這些會跟最大數字N有關
+	* 基底為r，代表會有r個bucket在每一輪比較時
+	* 而要做幾次循環則依據最大數字N與基底有關:
+$$d=\log_{r}N+1$$
+	* 而每次循環需要花的時間是n(輸入個數)
+* 因此複雜度為O(nlog(n))
+* Radix sort tradeoff
+	* 當基底是100時，若最大數字為4位數，則要做2次循環，有100buckets
+	* 當基底是10時，若最大數字為4位數，則要做4次循環，有10buckets
+	* 這是空間複雜度與時間複雜度的trade-off(Bigger base means more buckets but less iteration)
+	* 通用複雜度是(r是bucket數)
+$$O(n)=O(d(n+r)=O((\log_{r}N+1)(n+r))$$
+* Radix sort實做細節(以10為base的實做)
+	* 一開始跟counting sort一樣算該位數每個數字出現的次數
+	* 將cnt array改成累積<=自己的個數，為了得知最後一個自己應該出現在什麼位置
+	* **從原理我們知道，容器是一個queue也就是說當我們從array的前面開始掃時，前面的元素一定會先進去容器裡，但我們現在只有>=該digit的數字有幾個，也就是該數字的最後一個位置，因此要從最後一個開始掃，才能確保後面的element比較晚進來容器的意思**
+```c++
+void find_max(int *A,int n){
+	int max_num=-INT_MAX;
+	for(int i=0;i<n;++i){
+		if(A[i]>=max_num)
+			max_num=A[i];
+	}
+	return max_num;
+}
+// Implement counting sort for radix sort, use exp to determine the digit
+void countsort(int *A,int n,int exp){
+	// Count all the number in that digit
+	int count[10]={0};// 10-based have 10 buckets
+	int temp[n];
+	for(int i=0;i<n;++i)
+		count[(A[i]/exp)%10]+=1;
+	for(int i=1;i<10;++i)
+		count[i]+=count[i-1];
+	for(int i=n-1;i>=0;--i){
+		temp[(count[(A[i]/exp)%10])-1]=A[i];
+	}
+	for(int i=0;i<n;++i)
+		A[i]=temp[i];
+	return;	
+}
+void radixsort(int *A,int n){
+	int max_num=find_max(A,n);
+	for(int exp=1;max_num/exp>0;exp*=10){
+		countsort(A,n);
+	}
+	return;
+}
+```
 ## STL sort usage
 * 因為排序演算法太長使用了，因此我們通常不會自己實做，而是使用STL裡已經幫我們寫好的**std::sort**(背後原理是用Quick sort進行實做)
 * 使用時要`#include<algorithm>`
@@ -519,3 +620,5 @@ bool compare(const student& a, const student& b){
 [memcpy用法](https://shengyu7697.github.io/cpp-memcpy/)
 [楊表實做](https://www.techiedelight.com/young-tableau-insert-search-extract-min-delete-replace/)
 [in order Quick sort](https://ithelp.ithome.com.tw/articles/10278644)
+[Radix sort實做](https://www.geeksforgeeks.org/dsa/radix-sort/)
+[Conting sort實做](https://www.geeksforgeeks.org/dsa/counting-sort/)

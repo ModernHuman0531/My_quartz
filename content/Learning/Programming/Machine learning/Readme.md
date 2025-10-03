@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-27T12:05
+updated: 2025-09-30T18:36
 title:
 ---
 2025-08-29 19:12
@@ -9,7 +9,10 @@ Status:
 
 Tags:
 
-# Untitled
+# 重大日程
+* 第一次期中考(10/14)
+	* 考試範圍week1-week5內容
+	* 可以攜帶一張A4小抄
 
 # Reference
 [吳恩達教授yt影片連結](https://www.youtube.com/playlist?list=PLOXON7BTL9IW7Ggbc09jLqGmzkwPI4-3V)

@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-27T11:34
+updated: 2025-09-30T13:01
 title:
 ---
 2025-09-10 12:56
@@ -8,57 +8,18 @@ title:
 Status:
 
 Tags:[[Homework 2]]
-# Linear regression and Gradient descent
-老師投影片重點
-### **1. 線性回歸基礎**
-- 線性模型方程式：h(x) = θ₀ + θ₁x₁ + ... + θₙxₙ
-- 設計矩陣 X 和參數向量 θ
-- 預測值計算：Xθ
-- 問題: 
-	1. why x0=1
-	2. 線性模型的缺點
-### **2. 成本函數 (Cost Function)**
-- 均方誤差 (MSE)：J(θ) = (1/2m)∑(hθ(x⁽ⁱ⁾) - y⁽ⁱ⁾)²
-- 矩陣形式：J(θ) = (1/2)(Xθ - y)ᵀ(Xθ - y)
-### **3. 正規方程式 (Normal Equation)**
-- 解析解：θ = (XᵀX)⁻¹Xᵀy
-- 矩陣不可逆問題和解決方案
-- 問題
-	- 矩陣推導的詳細過程
-	- theta是線性模型的參數，要找到使cost function最小的theta
-	- Gradient是啥
-	- optimizer是啥(2021年有)
-### **4. 梯度下降基礎**
-- 更新規則：θ := θ - α∇J(θ)，希望能降到最小值
-- 學習率 α 的影響
-- LMS 更新規則
-- 問題:
-	- 為啥要用gradient, 背後原理是啥
-	- LMS update rule 在convex函數只會落到absolute minimum，因為沒有local minimum
-### **5. 梯度下降變體**
-在不是convex function 時要如何避免落到local minimum
-- Batch Gradient Descent
-	- Batch vs epoch
-	- Batch size trade-off
-- Stochastic Gradient Descent (SGD)
-- Mini-batch Gradient Descent
 
-### **6. 優化問題**
-- Local minima vs Global minimum
-- 凸函數特性
-- 避免局部最小值的方法
-### **7. 進階優化器**
-- Momentum
-- Adam
-- RMSProp
-### **8. 機率解釋**
-- 高斯噪聲假設
-- 最大似然估計 (MLE)
-- 與最小二乘法的關係
-### **9. 局部加權回歸 (LWR)**(只要了解概念就好了)
-- 非參數方法
-- 權重函數
-- 帶寬參數 τ
+目錄:
+- [[#Linear model example|Linear model example]]
+	- [[#Linear model example#Step 1. Choose model|Step 1. Choose model]]
+	- [[#Linear model example#Step 2. Goodness of function|Step 2. Goodness of function]]
+	- [[#Linear model example#Step3. Select the best function|Step3. Select the best function]]
+		- [[#Step3. Select the best function#Method 1. Normal equation|Method 1. Normal equation]]
+		- [[#Step3. Select the best function#Method 2. Gradient descent(perfered)|Method 2. Gradient descent(perfered)]]
+	- [[#Linear model example#Different model's result|Different model's result]]
+	- [[#Linear model example#Redesign the model|Redesign the model]]
+	- [[#Linear model example#Regularization|Regularization]]
+
 # Linear regression
 ## Linear model example
 * 我們以預測寶可夢進化後的cp值(scalar)當作例子，我們現在有1. 現在的cp值2.現在的重量3. 現在的高度4. 現在的屬性 ，都可以作為linear regression的輸入 
@@ -106,7 +67,7 @@ L(f)=\sum^{10}_{n=1} (\hat{y}-f(x^{n}_{cp}))^2 \\ L(w,b)=\sum^{10}_{n=1} (\hat{y
 * 我們之前假設未來cp值只與現在的cp 值有關，但根據我們所收集的數據，似乎不同品種所跟隨的線不同，而且伊布似乎不是非常線性，我們假設新的模型會依據不同的品種有不一樣的`(w,b)`，我們將模型定義為:$$\begin{aligned}y=b_{1}(\delta(x_{s}=Pidgey))+w_{1}x_{cp}(\delta(x_{s}=Pidgey)) \\ +b_{2}(\delta(x_{s}=Weedle))+w_{2}x_{cp}(\delta(x_{s}=Weedle)) \\ +b_{3}(\delta(x_{s}=Caterpie))+w_{3}x_{cp}(\delta(x_{s}=Caterpie)) \\ +b_{4}(\delta(x_{s}=Eevee))+w_{4}x_{cp}(\delta(x_{s}=Eevee))  \end{aligned}$$，使用這個模型後，會使testing error變成`14.3`，trainging error變成`3.8`
 * 模型有非常多種定義方式，會影響未來的cp值也可能不只跟現在的cp值有關，可能也跟體重，高度那些有關，可以多嘗試不同種類的搭配像是**1. 增加feature 2. 試試不同種model**等等，但注意不要太過複雜以免發生overfitting
 ### Regularization
-* **Regularization是一種重新定義loss function的方法**，可以減少高次階model的overfitting，我們將新的loss function定義為:$$L=\sum_{n}(\hat{y}-(w_{i}x_{i}+b))^2+\lambda \sum (w_{i})^2$$，多考慮這樣向的原因是我們希望loss function變得平滑一點，因為高階model比較容易受到noise(雜訊)的影響，而加上後面那一項會讓loss function傾向取得較小的`wi`值
+* **Regularization是一種重新定義loss function的方法**，可以減少高次階model的overfitting，我們將新的loss function定義為:$$L=\sum_{n}(\hat{y}-(w_{i}x_{i}+b))^2+\lambda \sum (w_{i})^2$$，多考慮這樣向的原因是我們希望loss function變得**平滑**一點，因為高階model比較容易受到noise(雜訊)的影響，而加上後面那一項會讓loss function傾向取得較小的`wi`值
 * 後面那項與`b`沒關係是因為那是截距與函數的陡峭程度無關
 * 而為啥`wi`越小越不會受到雜訊影響是因為:$$y+\sum(w_{i}\Delta x_{i})=b+\sum(w_{i}(x_{i}+\Delta x_{i})$$，當`wi`越小越不會受到`Δxi`的影響。
 

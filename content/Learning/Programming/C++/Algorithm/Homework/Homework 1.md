@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-22T23:10
+updated: 2025-10-01T22:10
 title:
 ---
 2025-09-15 22:22
@@ -9,6 +9,8 @@ Status:
 
 Tags:[[sorted]] [[Search]],[[Enumerate]]
 
+LAB1 CMS: [https://114algo.cs.nycu.edu.tw/archive/](https://114algo.cs.nycu.edu.tw/archive/)
+LAB1 assistant answer: [https://www.notion.so/Lab-Solution-Introduction-to-Algorithm-2778f0b8782c800da165e3bdb0590310?source=copy_link](https://www.notion.so/Lab-Solution-Introduction-to-Algorithm-2778f0b8782c800da165e3bdb0590310?source=copy_link)
 # Homework 1
 ## pA
 * 題意簡化: 依成績排序，輸入是第一行分別代表人數(N)跟科目(M)
@@ -117,6 +119,19 @@ int main(){
 	* 用二分搜找出一個`wi`使得有k個餐點組合分數比他大，但因為`wi`不一定存在在現有組合之中，所以要掃描整個組合找出小於他的組合裡最大的(感覺很笨ㄟ，就不想用loop枚舉但最後找答案還是要用，感覺怪怪的)。
 	* 為了避免double發生不准的情形，全部 `*2` 來進行二分搜.
 	* 要注意輸入範圍，有些變數可能超過int的邊界(`2*10^9`)可能會吃TLE
-* 最終解法: 
+* 解法: 
+	* 輸入範圍注意，k跟w都可會爆int，因此跟這兩個有關的都要開long long int。
+	* 找出第k大的得分=>一眼二分搜
+	* 二分搜實做細節
+		* 實做的是當一個數字num傳進一個函數count裡，count函數會計算所有大於等於num的數字，並回傳那個數量，第k大的數字代表要找第一個數字剛好會讓count(num)>=k，也就是說count(mid)<k時代表mid太大，讓r=mid，當count(mid)>=k時l=mid，因為l包含在解答裡，因此這是一個**左閉右開的二分搜**，l要取排序過的`array[0]*2`，但r不能取最後一個元素，因為不能保證在範圍外，因此r要取`arr[n-1]*2+2`，`*2`是不想要有double的比較，且不會影響到大小順序
+	* count函數實做
+		* count要比單點跟combo裡有多少比num大，並輸出數量
+		* 單點: 簡單用for loop計算
+		* combo: 原本是用窮舉出所有可能性在比較，但時間複雜度會爆掉，因此用雙指標，l=0,r=n-1,r_start=r,
+	![[HW1_pD.png]]
+## pE
+
+## pF
+
 # Reference
 [凸函數解釋與定義](https://claude.ai/chat/297ea2c0-df2d-48e7-b2ef-6bf81352bb5e)
