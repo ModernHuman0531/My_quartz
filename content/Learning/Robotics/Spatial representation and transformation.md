@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-11T21:49
+updated: 2025-10-12T01:47
 title:
 ---
 2025-10-07 18:00
@@ -90,6 +90,7 @@ R_{Z}(\theta)&=\left[ \begin{array}{cc}
 
 ## NOAP matrix
 *  NOAP的意義是，將旋轉與位移結合成一個`4*4`矩陣(**先旋轉在位移**)，我們也將NOAP矩陣稱為Homogenous transformation。
+
 $$\begin{aligned}
 P^A&=R_{B}^AP^B+P_{B(origin)}^A \\
 &=\left[ \begin{array}{cc}
@@ -105,6 +106,7 @@ P_{B(origin)}^A&=從frameA看，frameB原點距離frameA原點向量
 \end{aligned}$$
 *  NOAP矩陣每個元素的意義
 	* NOAP 矩陣
+	
 $$\begin{aligned}
 T&=\left[ \begin{array}{cc}
 n_{x}&o_{x}&a_{x}&p_{x} \\
@@ -126,6 +128,7 @@ $$
 	![[Operator.png]]
 *  矩陣連續運算意義與NOAP反矩陣推導
 	假設我們在C frame上有個向量我們想從B frame推到A frame上看，我們可以拆解成兩個NOAP矩陣相乘跟一個向量(矩陣跟向量連乘時，順序不重要)，將結果展開
+	
 $$\begin{aligned}
 p^A&=T_{B}^AP^B=T^A_{B}(T_{C}^BP^C)=T^A_{B}T_{C}^BP^C \\
 &=\left[ \begin{array}{cc}
@@ -149,13 +152,15 @@ R&=R_{B}^AR_{C}^B=在連乘時旋轉矩陣結果就是旋轉矩陣連乘 \\
 P&=P_{B(origin)}^A+R_{B}^AP_{C(origin)}^B,P_{B(origin)}^A代表從frameA看frameB原點，而P_{C(origin)}^B代表\\從&frameB看frameC原點，而要乘R_{B}^A的原因是你相加要在同一個座標系才有意義，\\而&P_{C(origin)}^B是在B座標系，要轉到A座標系才能相加
 \end{aligned}
 $$
-	 ![[Transformation.png]]
-	* 根據連乘性值來推導反矩陣，將frame B到frame A變換再從frame A變換到frame B等於沒有變化，結果是一個`4*4`的單位矩陣
+
+![[Transformation.png]]
+* 根據連乘性值來推導反矩陣，將frame B到frame A變換再從frame A變換到frame B等於沒有變化，結果是一個`4*4`的單位矩陣
 $$\begin{aligned}
 T_{B}^AT_{A}^B&=T_{B}^A(T_{B}^A)^{-1}=I^4 \\
 T^B_{A}&=(T_{B}^A)^{-1}
 \end{aligned}$$
-	* 展開上式可得
+* 展開上式可得
+
 $$\begin{aligned}
 I^4&=\left[ \begin{array}{cc}
 R_{B}^AR_{A}^B & P_{B(origin)}^A+R_{B}^AP_{A(origin)}^B \\
@@ -168,7 +173,7 @@ R_{A}^B&=(R_{B}^A)^{-1}=(R^A_{B})^T \\ \\
 P_{A(origin)}^B&=-P_{B(origin)}^A*R_{B}^A
 
 \end{aligned}$$
-	* 從推導可知道B到A的**NOAP反矩陣**為
+* 從推導可知道B到A的**NOAP反矩陣**為
 $$\begin{aligned}
 (T_{B}^A)^{-1}&=T^B_{A}=\left[ \begin{array}{cc}
 (R_{B}^A)^T &  -P_{B(origin)}^A*R_{B}^A\\
