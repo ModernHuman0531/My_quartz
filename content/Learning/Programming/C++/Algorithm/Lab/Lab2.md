@@ -1,0 +1,236 @@
+---
+created: 2025-08-03T14:22
+updated: 2025-10-16T21:58
+title:
+---
+2025-10-12 14:38
+
+Status:
+
+Tags:[[Special tricks]]
+目錄:
+# Lab2
+## pA
+* show value Fn in the following recursive formula
+$$F_{i}=aF_{i-1}+bF_{i-2}+c$$
+### 想法：開一個vector存第i個fib number如果有的話就不用算了，然後在帶入遞迴fib function並回傳long long
+## pB
+* Input a,b,p, in range of 1 to 10^9
+* find 
+$$\begin{aligned}
+a^b mod(p) \\
+\begin{cases} a^b&=a^{b/2}a^{b/2}，當b是偶數 \\  
+a^b&=a^{b-1}a，當b是奇數  \\
+\end{cases}
+，左式是快速冪性質
+\end{aligned}$$
+### 想法
+* 原本想說跟先算完`a^b`再取mod，但當`a^b`或`p`太大時，中間結果會爆炸(超過long long 的邊界 10的18次方)，因此要善用模性質
+* 乘法模性質(乘法取模＝先各自取模相乘後再取模)：
+$$(a*b)mod(p)=(amod(p)*bmod(p))mod(p)$$
+* 在遞迴式如何應用這個性質：做一步，mod一次
+```
+分解2^10 mod 7
+=((2^5)^2)mod7
+=((2^5)mod7*(2^5)mod7)mod7
+
+2^5mod7
+=(2^4*2)mod7
+=((2^4)mod7*2^1mod7)mod7
+
+2^4mod7
+=((2^2)*(2^2))mod7
+=((2^2)mod7*(2^2)mod7)mod7
+
+2^2mod7
+=(2^1mod7*2^1mod7)mod7
+```
+* 快速冪利用mod乘法性質實做
+```c++
+long long my_exp(long long a,long long b,long long p){
+	if(b==0) return 1;//1 mod p一定等於1
+	if(b==1) return a%p; //a^1modp=a%p
+	long long modP_n=(b%2?my_exp(a,b-1,p)*my_exp(a,1,p):my_exp(a,b/2,p)*my_exp(a,b/2,p))%7;
+	return modP_n;
+}
+```
+## pC
+* 經典的8皇后問題，要用divide and conquer解決，最大的不同是檢查有沒有衝突函數的不同
+* 位置存取方法:我用一個`vector<int>`來存取(row,column)，index代表row，而`vector[int]`代表在該row要放column在哪個位置
+* 八皇后代表每一個row都要放，如果有一行沒辦法放代表這個組合是不可行的。
+* 從row0開始放，對所有可能的column進行迴圈選擇，將(row,column)丟進檢查函數檢查，如果出來的都沒有衝突到之前放的皇后則將column推進對應的index，然後繼續遞迴下一個row+1，然後把column拿出來換下一個column，終止條件是當row=8時，代表有找到一組解了
+* solve函數是以row跟current_weight，來追蹤現在的row跟現在的weight是多少
+```c++
+void solve(int row,int current_weight){
+	if(row==8){ //Find one set solution
+		if(max_num<current_weight)
+			max_num=current_weight;
+		return;
+	}
+	for(int col=0;col<=7;++col){
+		if(check(row,col)){
+			vec.push_back(col);
+			solve(row+1,current_weight+weights[row][col]); //有將皇后放到到(row,col)，才要將currnet_weight加上weights[row][col]
+			vec.pop_back();//把對應row的col拿出來換其他可能性
+		}
+	
+}
+```
+
+### 方法一
+檢查函數check(row,col)，是用來檢查與之前的皇后位子是否有衝突，第一個方法是傳進去row跟col然後檢查之前column，主對角線跟副對角線
+
+### 方法二(方便之後優化)
+多三個array 來分別紀錄column,主對角線跟副對角線
+
+## pD
+* 前綴和?
+* 有一個陣列大小為n，裡面每個index內容都有一個數值(long long)，會有兩個operation，1 代表是將位子p的值換成x，2會給定一個範圍`[l.r]`，計算這個範圍數值的XOR
+### 想法
+subtack 1:最簡單的照著他實做，沒用什麼特殊技巧，但我猜可能會報TLE
+問AI後，會用到的技巧有:
+1. 前綴和
+[[Advanced Data structure]]2. 線段數
+所以我要先學習XOR的運算->前綴和->線段樹
+* A^B 就代表A跟B的XOR了
+```
+XOR 運算：
+0 XOR 0         0
+0 XOR 1         1
+1 XOR 0         1
+1 XOR 1         0
+```
+* 方法一如我所料爆TLE了，只過subtask 1
+subtasl2:加入前綴和
+* 對於區間`[l,r]`的XOR做前綴和，原本要算的是
+$$XOR[l,r]=a_{l}⊕a_{l+1}\dots⊕a_{r}$$
+我們先計算`[a1,a2,...,an]`的前綴和
+$$S_{i}=a_{1}⊕a_{2}*\dots⊕a_{i}$$
+因此要計算區間`[l,r]`的XOR為
+$$XOR[l,r]=S_{r}⊕S_{l-1}$$
+上式會成立是利用XOR的性質
+$$\begin{aligned}
+A⊕B⊕B&=A⊕0=A\\
+S_{r}⊕S_{l-1}&=(S_{1}⊕S_{2}\dots ⊕S_{r})⊕(S_{1}⊕\dots⊕S_{l-1})\\
+&=(S_{r}⊕S_{r-1}⊕\dots S_{1})⊕(S_{1}⊕\dots⊕S_{l-1}) \\
+&=S_{r}⊕\dots⊕S_{l} \\
+&=S_{l}⊕\dots⊕S_{r}
+\end{aligned}$$
+如此一來我們就用前綴和成功優化了區間XOR了！！！
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int n;
+vector<long long> vec;
+vector<long long> prefix_sum;
+void prefix_cal(int n);
+void Update(int p,int x);
+void Query(int l,int r);
+void operation(int i,int j,int k){
+    // i is operation,j and k are the input of Update/Query
+    if(i==1) return Update(j,k);
+    if(i==2) return Query(j,k);
+
+}
+void Update(int p,int x){
+    vec[p]=x;
+    prefix_cal(n);
+    return;
+}
+void Query(int l,int r){
+    long long ans=prefix_sum[r]^prefix_sum[l-1];
+    cout<<ans<<"\n";
+}
+void prefix_cal(int n){
+    prefix_sum.clear();
+    prefix_sum.push_back(0); // prefix_sum[0] = 0
+    long long sum=0;
+    for(int i=1;i<=n;++i){
+        sum=sum^vec[i];
+        prefix_sum.push_back(sum);
+    }
+}
+int main(){
+    int q;
+    cin>>n;
+    vec.push_back(0);// Let the position start from 1
+    // Input handle
+    for(int i=0;i<n;++i){
+        long long input;
+        cin>>input;
+        vec.push_back(input);
+    }
+    // 初始計算 prefix sum
+    prefix_cal(n);
+    
+    cin>>q;
+    for(int i=0;i<q;++i){
+        int op,j,k;
+        cin>>op>>j>>k;
+        operation(op,j,k);
+    }
+    return 0;
+}
+```
+subtask 3：加入線段樹
+* 為何要加入線段樹:前綴和固然在計算區間XOR非常好用，但因為有另外一個operation Update，會改變array裡面的值，這樣一來整個前綴和就要重算一次
+實做細節
+* 存節點的資訊的vector在push第一個值之前要記得resize(4*n+1)，因為線段樹存值通常要4*n。
+## pE(偏序問題)
+* 題目簡介：
+	在空間中的點是由x,y,z座標構成的，首先會輸入一個N代表空間中會有幾個點，接著會有N行，每一行輸入(xi,yi,zi)，(xi,yi,zi)要跟空間中的其他點比，看有多少點是在他的右上方，也就是
+	$$x_{i}<x_{j}和y_{i}<y_{j}和z_{i}<z_{j}$$
+* subtask1:暴力解，建一個class包含三個點，在建一個vector儲存這些點，共N個，輸入完後，用雙重迴圈跑第i個點去算有多少點是在他的右上方
+缺點就是會爆TLE，而且沒用到subtask1的性質
+$$x_{i}=y_{i}=z_{i}$$
+仔細觀察subtask條件:
+1. subtask1:xi=yi=zi(一維偏序)
+2. subtask2:yi=zi(二維偏序)
+3. subtask3:沒有限制(三維偏序)
+所以我們用排序來降低subtask1 的複雜度，因為在排序後可以快速知道有多少點比現在大。
+但因為排序會打亂原本的點的順序，因此原本點裡面的內容要多加一個idx。
+
+* 在一維時因為xi=yi=zi,等於一個點只要看xi就知道跟其他點的相對大小，假設用xi從大到小進行排序則，在他前面有多少個點就代表有多少點比他大
+* 但那是再沒有考慮有點x座標一樣的前提，因為**相同不算偏序**，那該如何解決這個問題呢？
+* 用雙指標去追蹤相同數值！！！
+```
+輸入（假設都是一維）：
+索引:  0  1  2  3  4  5  6  7  8  9
+值:   [7, 8, 6, 3, 8, 8, 7, 5, 1, 7]
+
+
+**步驟 1：配對**
+
+[(7,0), (8,1), (6,2), (3,3), (8,4), (8,5), (7,6), (5,7), (1,8), (7,9)]
+
+
+**步驟 2：排序（按值遞減）Array sorted**
+
+位置 i:  0      1      2      3      4      5      6      7      8      9
+       (8,1)  (8,4)  (8,5)  (7,0)  (7,6)  (7,9)  (6,2)  (5,7)  (3,3)  (1,8)
+值:  8      8      8      7      7      7      6      5      3      1
+
+用雙指針去找到相同的數值
+從i=0開始找
+i=0;
+while(i<n)
+	// 找出與sorted[i]值相同的數量
+	j=i;
+	while(a[i]==a[j])
+		j++;
+	// 在[i,j)這個區間的數值都相同，將他們提取idx塞進ans array 裡
+	for(int k=i;k<j;++k)
+		ans[sorted[i].idx]=i;
+	i=j;//將i移到下一個不同數值位置
+	
+```
+結果就是ans 陣列的輸出
+**先理解為何一維偏序要用排列，跟其實做，對理解2 3維偏序有幫助**
+* subtask2:二維偏序問題有兩種建議方法1. CDQ 分治 2. 排序＋線段樹/BIT，先學比較簡單的方法二，再看CDQ分冶
+* 方法1.排序+BIT
+1. 
+# Reference
+[經典八皇后問題實做](https://blog.csdn.net/qq_64934572/article/details/129372328)
+[前綴和教學](https://guide.ntucpc.org/BasicAlgorithm/partial_sum/)
+[線段樹教學](https://cp.wiwiho.me/segment-tree/)
+[偏序問題教學](https://blog.csdn.net/EQUINOX1/article/details/136305243)

@@ -1,13 +1,13 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-20T13:51
+updated: 2025-10-12T14:37
 title:
 ---
 2025-09-17 15:44
 
 Status:
 
-Tags:[[Learning/Programming/C++/Algorithm/Tree|Tree]],  [[Sort]], [[Learning/Programming/C++/Algorithm/Homework/Homework 1|Homework 1]]
+Tags:[[Learning/Programming/C++/Algorithm/Tree|Tree]],  [[Sort]], [[Lab1|Lab1]]
 目錄:
 - [[#Linear search|Linear search]]
 - [[#Binary search|Binary search]]

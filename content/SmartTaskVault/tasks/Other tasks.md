@@ -1,6 +1,6 @@
 ---
 created: 2025-08-02T23:23
-updated: 2025-09-27T11:14
+updated: 2025-10-15T00:03
 title: Other tasks
 ---
 
@@ -16,6 +16,6 @@ title: Other tasks
 - [x] ML after class question2 #重要度1 ✅ 2025-09-02
 - [x] todolist增加每日任務 #重要度1 ✅ 2025-09-06
 - [ ] 製作日程表
-- [ ] 買濕紙巾
+- [ ] 買濕紙巾 
 ---
 

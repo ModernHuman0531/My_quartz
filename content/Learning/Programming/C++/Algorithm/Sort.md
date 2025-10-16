@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-01T19:49
+updated: 2025-10-16T18:21
 title:
 ---
 2025-09-13 15:49
@@ -585,7 +585,7 @@ void radixsort(int *A,int n){
 #include <algorithm>
 
 using namespace std;
-bool compare(int num1, num2){
+bool compare(int num1, int num2){
 	return num1 > num2;
 }
 

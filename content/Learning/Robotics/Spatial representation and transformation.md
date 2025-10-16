@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-12T01:47
+updated: 2025-10-12T12:58
 title:
 ---
 2025-10-07 18:00
@@ -205,7 +205,8 @@ RPY_{X,Y,Z}(\phi,\theta,\psi)&=R_{Z}(\phi)R_{Y}(\theta)R_{X}(\psi) \\
 -\sin \phi n_{x}+\cos \phi n_{y}&=\cos \psi, -\sin \phi a_{y}+\cos \phi a_{x}=\sin \psi \\
 \implies \tan \psi&=\frac{-\sin \phi a_{y}+\cos \phi a_{x}}{-\sin \phi n_{x}+\cos \phi n_{y}}
 \end{aligned}$$
-	*  根據上述公式我們可以求得Φ，θ，ψ(用tan算是避免在角度很小時sin跟cos會有誤差)
+	*  根據上述公式我們可以求得Φ，θ，ψ(用tan算是避免在角度很小時sin跟cos會有誤差)	
+	
 $$\begin{aligned}
 \phi&=\tan^{-1} \frac{n_{y}}{n_{x}} \\
 \theta&=\tan^{-1} \frac{-n_{z}}{\cos \phi n_{x}+\sin \phi n_{y}} \\
