@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-16T21:58
+updated: 2025-10-18T14:51
 title:
 ---
 2025-10-12 14:38
@@ -17,6 +17,7 @@ $$F_{i}=aF_{i-1}+bF_{i-2}+c$$
 ## pB
 * Input a,b,p, in range of 1 to 10^9
 * find 
+
 $$\begin{aligned}
 a^b mod(p) \\
 \begin{cases} a^b&=a^{b/2}a^{b/2}，當b是偶數 \\  
@@ -180,6 +181,8 @@ subtask 3：加入線段樹
 * 題目簡介：
 	在空間中的點是由x,y,z座標構成的，首先會輸入一個N代表空間中會有幾個點，接著會有N行，每一行輸入(xi,yi,zi)，(xi,yi,zi)要跟空間中的其他點比，看有多少點是在他的右上方，也就是
 	$$x_{i}<x_{j}和y_{i}<y_{j}和z_{i}<z_{j}$$
+	且x,y,z的輸入範圍為
+	$$1\leq x_{i},y_{i},z_{i}\leq N$$
 * subtask1:暴力解，建一個class包含三個點，在建一個vector儲存這些點，共N個，輸入完後，用雙重迴圈跑第i個點去算有多少點是在他的右上方
 缺點就是會爆TLE，而且沒用到subtask1的性質
 $$x_{i}=y_{i}=z_{i}$$
@@ -228,7 +231,98 @@ while(i<n)
 **先理解為何一維偏序要用排列，跟其實做，對理解2 3維偏序有幫助**
 * subtask2:二維偏序問題有兩種建議方法1. CDQ 分治 2. 排序＋線段樹/BIT，先學比較簡單的方法二，再看CDQ分冶
 * 方法1.排序+BIT
-1. 
+1. 先對x進行排序(先不討論x相同的情況)，將x從大到小進行排序後，對你要查看的那個點，只要看你前面有幾個點你就知道有多少點的x比你大。
+2. 對y座標則以BIT來維護，傳統的BIT是有兩個operation 1.)是將位置p的數值加x 2.)是查詢`[1,i]`的區間和，但在這個case我們是要將y座標視為位置，一開始的陣列都是0，當y出現後我們要將y位置裡的數值+1代表y出現的次數，維護完BIT後查尋`[1,y]`有多少個，代表有多少點=<y，再將已經查詢過得點倒扣得到有多少點>y，並存進ans裡 **(注意:先查詢再插入，避免算到自己跟造成處理x相同時的困擾)**
+3. 依照2.描述，來討論x相同的case如何影響sort跟如何解決x相同的case，假設有兩個點A(8.3),B(8.7)，如果B在A前面，在討論A的y時，維護線段樹會將B點視為A的偏序，但A跟B的x相同所以顯然不是偏序，所以在排序時要
+	1. 將x從大到小排
+	2. 將y從小到大排
+4.  x相同時當然也可以一個個處理，但最好還是分批處理，用 **雙指標找到x相同的情況**，先將全部查訊後放進ans，再將他們的數值全部一次插入
+* 二維偏序實做(sort+BIT)
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+int N;
+
+class spaceNode{
+    public:
+        int x,y,z;
+        int idx;
+        spaceNode(int x_,int y_,int z_,int idx_):x{x_},y{y_},z{z_},idx(idx_){}
+};
+
+vector<spaceNode> vec;
+vector<int> ans;
+vector<int> BIT;
+bool cmp(spaceNode x1,spaceNode x2){
+    if(x1.x!=x2.x)
+        return x1.x>x2.x;
+    return x1.y<x2.y;
+}
+// lowbit,update,query and insert are the implement of BIT in 2d case.
+int lowbit(int num){
+    return (num)&(-num);
+}
+void update(int pos,int value){
+    for(;pos<=N;pos+=lowbit(pos)){
+        BIT[pos]+=value;
+    }
+    return;
+}
+int query(int pos){
+    int ans=0;
+    for(;pos>0;pos-=lowbit(pos)){
+        ans+=BIT[pos];
+    }
+    return ans;
+}
+void insert(int value){
+    update(value,1);
+}
+int count_greater(int pos){
+    // The point has been insert
+    int total=query(N); //Total number of point have been inserted
+    int lq=query(pos);
+    int greater=total-lq;
+    return greater;
+}
+int main(){
+    ios::sync_with_stdio(false),cin.tie(nullptr);
+    // Input
+    cin>>N;
+    for(int i=1;i<=N;++i){
+        int x,y,z;
+        cin>>x>>y>>z;
+        vec.push_back(spaceNode(x,y,z,i));
+    }
+    sort(vec.begin(),vec.end(),cmp);
+    // Use double pointer to handle the same x
+    ans.resize(N+1,0);
+    BIT.resize(N+1,0);
+    int j=0;
+    while(j<N){
+        int k=j;
+        // Find the range where x is equal in [j,k)
+        while(k<N && vec[j].x==vec[k].x){
+            ++k;
+        }
+        // Handle range j to k-1 first
+        for(int l=j;l<k;++l){
+            int greater_num=count_greater(vec[l].y);
+            ans[vec[l].idx]=greater_num;
+        }
+        // Insert y's number as position into BIT
+        for(int l=j;l<k;++l){
+            insert(vec[l].y);
+        }
+        j=k;
+    }
+    
+    for(int i=1;i<=N;++i){
+       cout<<ans[i]<<"\n";
+    }
+    return 0;
+}
+```
 # Reference
 [經典八皇后問題實做](https://blog.csdn.net/qq_64934572/article/details/129372328)
 [前綴和教學](https://guide.ntucpc.org/BasicAlgorithm/partial_sum/)

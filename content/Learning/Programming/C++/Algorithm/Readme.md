@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-16T21:42
+updated: 2025-10-20T19:53
 title:
 ---
 2025-09-02 21:31
@@ -22,8 +22,8 @@ Tags:
 * 每題解題思路都要寫筆記
 * 簡單題一定要完成，中等題至少要寫一題
 * 等解答出來後一定要搞懂思路跟用到的技巧後記下來並自己做一次，不懂的助教時間一定要去詢問
-* [Homework OJ website(當期的)] [https://114algo.cs.nycu.edu.tw/ ]
-* [Homework OJ website(已過期限的)][https://114algo.cs.nycu.edu.tw/archive/]
+* [Homework OJ website(當期的)](https://114algo.cs.nycu.edu.tw/)
+* [Homework OJ website(已過期限的)](https://114algo.cs.nycu.edu.tw/archive/)
 * 助教作業詳解:https://www.notion.so/Lab-Solution-Introduction-to-Algorithm-2778f0b8782c800da165e3bdb0590310
 ## 基本先備知識(大幅提昇編輯速度)
 *  萬用標頭檔

@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T03:28
-updated: 2025-10-16T14:38
+updated: 2025-10-21T22:06
 title: Studt Tasks
 ---
 ## 任務列表
@@ -18,10 +18,11 @@ title: Studt Tasks
 	- [ ] Maps and Hash table
 	- [ ] Graph algorithms
 - [x] 演算法HW1(9/22) #重要度1 ✅ 2025-09-24
-- [ ] 演算法HW1(pE,pF)　#重要度2 
+- [ ] 演算法HW1(pE,pF)　#重要度3 
 - [x] 演算法HW2(10/13)(pA-pD) #重要度1 ✅ 2025-10-15
 - [ ] 演算法HW2(pE,pF,pEX) 
-	- [ ] pE偏序問題 #重要度2  
+	- [x] pE二維偏序問題 #重要度1 ✅ 2025-10-18
+	- [ ] pE三維偏序問題
 - [x] ML hw1 #重要度1 ✅ 2025-09-06
 - [x] ML 補充影片(一) #重要度1 ✅ 2025-09-04
 - [x] ML week 1 note #重要度1 ✅ 2025-09-04
@@ -29,6 +30,9 @@ title: Studt Tasks
 - [x] ML week2 補充影片(claude 上) #重要度1 ✅ 2025-09-13
 - [x] ML 補充影片(classfication) #重要度1 ✅ 2025-10-01
 - [x] ML補充影片(Logistic regression) #重要度1 ✅ 2025-10-16
+- [x] ML generative function note #重要度1 ✅ 2025-10-19
+- [x] ML logistic regression note #重要度2 ✅ 2025-10-20
+- [ ] ML regularization note(week 4) #重要度2  
 - [ ] ML補充影片(Ensemble-Lec22)
 - [x] ML midterm 1 review(week1-week5) #重要度1 ✅ 2025-10-15
 - [x] ML week2 note(Linear regression) #重要度1 ✅ 2025-09-21
@@ -44,20 +48,21 @@ title: Studt Tasks
 	- [x] STL sort usage and implement #重要度3 ✅ 2025-09-14
 	- [x] Linear time sorting #重要度1 ✅ 2025-10-01
 	- [x] Tree(BST and Red Black tree) #重要度1 ✅ 2025-10-15
-	- [ ] Graph(BFS and DFS)
+	- [ ] Graph(BFS and DFS) #重要度1 
 - [x] 機器人學chap2筆記 #重要度1 ✅ 2025-10-12
-- [ ] 機器人學chap3 影片
+- [ ] 機器人學chap3 影片 #重要度1   
 - [ ] 機器人學chap3 筆記
 - [x] 機器人學HW1(10/16) #重要度2 ✅ 2025-10-12
 - [ ] 機器人學HW2(10/30)
 - [ ] 機器人學Project 1(11/13)
 - [x] 日本現勢-線上小考quiz2 #重要度1 ✅ 2025-09-22
 - [x] 日本現勢-線上小考quiz3 #重要度3 ✅ 2025-09-29
+- [x] 日本現勢-線上小考quiz4 #重要度1 ✅ 2025-10-20
 - [x] g-code期中考筆記 #重要度1 ✅ 2025-09-22
 - [x] 化學實驗預報1 #重要度1 ✅ 2025-09-27
 - [x] 化學結報1 #重要度2 ✅ 2025-09-29
-- [ ] 化學預報2 #重要度1
-- [ ] 化學結報2
+- [x] 化學預報2 #重要度1 ✅ 2025-10-18
+- [x] 化學結報2 #重要度1 ✅ 2025-10-20
 - [ ] 學術倫理測驗與性平測驗(10/15)
 
 ---

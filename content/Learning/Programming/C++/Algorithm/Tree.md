@@ -1,13 +1,24 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-15T19:34
+updated: 2025-10-22T14:31
 title:
 ---
-nger2025-09-17 15:44
+2025-09-17 15:44
 
 Status:
 
 Tags:
+
+目錄:- [[#Binary Search Trees(二元搜尋樹,BST)|Binary Search Trees(二元搜尋樹,BST)]]
+	- [[#Binary Search Trees(二元搜尋樹,BST)#Search(int target)|Search(int target)]]
+- [[#Insert(int value)|Insert(int value)]]
+	- [[#Insert(int value)#Delete(int value)|Delete(int value)]]
+	- [[#Insert(int value)#BST C++ 實做|BST C++ 實做]]
+	- [[#Insert(int value)#補充: 其他兩種遍歷方式|補充: 其他兩種遍歷方式]]
+- [[#Red-Black Trees|Red-Black Trees]]
+	- [[#Red-Black Trees#Search|Search]]
+	- [[#Red-Black Trees#Insert and Delete|Insert and Delete]]
+
 
 # Tree
 ## Binary Search Trees(二元搜尋樹,BST)

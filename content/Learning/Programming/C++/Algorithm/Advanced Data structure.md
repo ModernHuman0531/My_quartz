@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-16T21:57
+updated: 2025-10-22T17:20
 title:
 ---
 2025-10-13 17:40
@@ -60,3 +60,5 @@ int query(int pos){
 ### 建立BIT
 如果有初始值的話把每個元素modify就好了
 # Reference
+[線段樹](https://cp.wiwiho.me/segment-tree/)
+[BIT](https://cp.wiwiho.me/fenwick-tree/)
