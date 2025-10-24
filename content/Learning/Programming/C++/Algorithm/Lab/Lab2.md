@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-18T14:51
+updated: 2025-10-24T14:37
 title:
 ---
 2025-10-12 14:38
@@ -18,13 +18,15 @@ $$F_{i}=aF_{i-1}+bF_{i-2}+c$$
 * Input a,b,p, in range of 1 to 10^9
 * find 
 
-$$\begin{aligned}
-a^b mod(p) \\
+$$
+\begin{aligned}
+a^b mod(p)& \\
 \begin{cases} a^b&=a^{b/2}a^{b/2}，當b是偶數 \\  
 a^b&=a^{b-1}a，當b是奇數  \\
 \end{cases}
 ，左式是快速冪性質
-\end{aligned}$$
+\end{aligned}
+$$
 ### 想法
 * 原本想說跟先算完`a^b`再取mod，但當`a^b`或`p`太大時，中間結果會爆炸(超過long long 的邊界 10的18次方)，因此要善用模性質
 * 乘法模性質(乘法取模＝先各自取模相乘後再取模)：
@@ -110,13 +112,15 @@ $$S_{i}=a_{1}⊕a_{2}*\dots⊕a_{i}$$
 因此要計算區間`[l,r]`的XOR為
 $$XOR[l,r]=S_{r}⊕S_{l-1}$$
 上式會成立是利用XOR的性質
-$$\begin{aligned}
+$$
+\begin{aligned}
 A⊕B⊕B&=A⊕0=A\\
 S_{r}⊕S_{l-1}&=(S_{1}⊕S_{2}\dots ⊕S_{r})⊕(S_{1}⊕\dots⊕S_{l-1})\\
 &=(S_{r}⊕S_{r-1}⊕\dots S_{1})⊕(S_{1}⊕\dots⊕S_{l-1}) \\
 &=S_{r}⊕\dots⊕S_{l} \\
 &=S_{l}⊕\dots⊕S_{r}
-\end{aligned}$$
+\end{aligned}
+$$
 如此一來我們就用前綴和成功優化了區間XOR了！！！
 ```c++
 #include <bits/stdc++.h>
