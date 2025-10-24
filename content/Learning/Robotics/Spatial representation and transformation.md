@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-12T12:58
+updated: 2025-10-24T14:46
 title:
 ---
 2025-10-07 18:00
@@ -25,7 +25,8 @@ $$R^T=R^{-1}$$
 * 現在有兩個座標系A跟B，R(A->B)代表A座標系到B座標系的關係，而R(B->A)代表B座標系到A座標系的關係，這兩個矩陣會滿足:
 $$R^A_{B}=(R_{A}^B)^T$$
 	* **R(A->B)矩陣會等同於R(B->A)矩陣的轉置**，以下為證明:
-	$$\begin{aligned}
+$$
+\begin{aligned}
 R_{A}&=[X_{A},Y_{A},Z_{A}],R_{B}=[X_{B},Y_{B},Z_{B}] \\ \\
 R_{A}^B&=(R_{B})^{-1}R_{A}=(R_{B})^TR_{A} \\
 &=\left[ \begin{array}{cc}
@@ -54,18 +55,20 @@ Y_{A}X_{B} & Y_{A}Y_{B} & Y_{A}Z_{B} \\
 Z_{A}X_{B} & Z_{A}Y_{B} & Z_{A}Z_{B}
 \end{array} \right]\\
 &=(R^B_{A})^T\\
-\end{aligned}$$
+\end{aligned}
+$$
 * 位移矩陣(相對於原本座標系移動px,py,pz)
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 T(p)=\left[ \begin{array}{cc}
 1&0&0&p_{x} \\
 0&1&0&p_{Y} \\
 0&0&1&p_{Z} \\
 0&0&0&1
 \end{array} \right]
-
-\end{aligned}$$
+\end{aligned}
+$$
 * 對特殊軸的旋轉矩陣(X,Y,Z軸)
 $$\begin{aligned}
 R_{x}(\theta)&=\left[ \begin{array}{cc}
