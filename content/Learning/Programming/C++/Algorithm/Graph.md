@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-24T14:06
+updated: 2025-10-24T14:09
 title:
 ---
 2025-10-21 22:10
@@ -80,10 +80,12 @@ DFS(W,currentTime)
 	* 每個邊最多只會經過一次
 因此計算複雜度為
 
-$$\begin{align}
+$$
+\begin{align}
 \sum_{W\in V}(O(degree(W))+1)&=O(E)+O(V) \\
 &=O(E)\ \because E\ dominate\ V
-\end{align}$$
+\end{align}
+$$
 
 ### DFS's Application
 * DFS在有向圖(Directed graph)依然是可以使用。
