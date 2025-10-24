@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-23T15:13
+updated: 2025-10-24T11:32
 title:
 ---
 2025-10-21 22:10
@@ -79,6 +79,7 @@ DFS(W,currentTime)
 		* 對節點V能到的點繼續做DFS下去 => O(degree(V))
 	* 每個邊最多只會經過一次
 因此計算複雜度為
+
 $$\begin{aligned}
 \sum_{W\in V}(O(degree(W))+1)&=O(E)+O(V) \\
 &=O(E)\ \because E\ dominate\ V
