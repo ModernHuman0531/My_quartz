@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-24T14:09
+updated: 2025-10-24T14:14
 title:
 ---
 2025-10-21 22:10
@@ -82,10 +82,11 @@ DFS(W,currentTime)
 
 $$
 \begin{align}
-\sum_{W\in V}(O(degree(W))+1)&=O(E)+O(V) \\
-&=O(E)\ \because E\ dominate\ V
+\sum_{W\in V}(O(\deg(W))+1) &= O(E) + O(V) \\
+&= O(E) \quad \text{(since $E$ dominates $V$)}
 \end{align}
 $$
+
 
 ### DFS's Application
 * DFS在有向圖(Directed graph)依然是可以使用。
