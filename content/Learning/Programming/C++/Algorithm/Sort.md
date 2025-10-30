@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-16T18:21
+updated: 2025-10-30T13:42
 title:
 ---
 2025-09-13 15:49
@@ -377,7 +377,7 @@ vector<int> HeapSort(vector<int> input){
 ### Quick sort
 * Quick sort 的概念是選一個pivot(先假設選容器裡最後一個element)作為基準，比他大的放在他右邊，小於等於他的則放在他左邊，然後對他左邊的array跟右邊的array再做Quicksort(**他自己不用，因為已經是正確的位置了**)，遞迴中止條件則是當array裡只有他一個人的時候就回傳
 	* 實做方法1(額外多O(runtime)空間)
-		```c++
+```c++
 	void Quicksort(int *array,int n){
 		if(n<=1)return;
 		int pivot=array[n-1];
@@ -399,8 +399,9 @@ vector<int> HeapSort(vector<int> input){
 		Quicksort(array,left);
 		Quicksort(array_left+1,n-left-1);
 	}
-	```
-	 ![[Quicksort1.jpg]]
+```
+
+![[Quicksort1.jpg]]
 	* 實做方法2(額外空間為O(1))被稱為**In-placed quicksort**:
 		* 實做步驟與原理：
 		* 用一個額外的變數(slast)來追蹤pivot的位置(有幾個比pivot小的數，pivot的位置就應該在他們後面)

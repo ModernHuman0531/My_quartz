@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-22T14:31
+updated: 2025-10-30T13:30
 title:
 ---
 2025-09-17 15:44
@@ -279,11 +279,13 @@ void PostOrderTraversal(Node* start){
 2. 假設在x下面的node數量一定至少有
 $$2^{b(x)}+1$$
 由上述兩個前提繼續推導
-$$\begin{aligned}
+$$
+\begin{aligned}
 n&\geq2^{b(root)}+1 \\
 &\geq 2^{height/2}+1 (紅黑數性質) \\ \\
 Height&\leq 2\log_{2}(n-1)
-\end{aligned}$$
+\end{aligned}
+$$
 * 結論為BR tree search的複雜度為log(n)
 ### Insert and Delete
 * 目前先不用知道，之後想詳細了解去課楓葉本第13章有詳細說明或是上網找資料

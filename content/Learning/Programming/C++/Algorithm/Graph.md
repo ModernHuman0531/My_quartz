@@ -1,13 +1,14 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-24T14:14
+updated: 2025-10-29T20:10
 title:
 ---
 2025-10-21 22:10
 
 Status:
 
-Tags:
+Tags:[[Shortest path]]
+
 目錄:
 # Graph
 基本名詞介紹
@@ -208,7 +209,7 @@ for i in range 0~i-1:
 ![[BFS_tree.png]]
 ### Implementation of BFS
 #### 1.Shortest path
-對於無權重的圖來說，要找W到V間的最短路程只要用BFS就行了。
+對於**無權重的圖(unweighted graph)** 來說，要找W到V間的最短路程只要用BFS就行了。
 比起單純做BFS遍歷，印出先到哪個點就好，如果要印出從M到V的最短路徑，vertex裡面的element要加上：
 * distance:紀錄從W到V的距離
 * parent:紀錄vertex V的父節點(是從哪個vertex 到V的)
@@ -409,6 +410,45 @@ int main(){
 	}
 	return 0;
 }
+```
+
+## SCC (Strongly Connected Compenents)
+* 定義：
+在一個有向圖G={E,V}裡，對於所有在V裡面的頂點a,b都可以找到相互到的了的路徑，也就是說可以找的到a->b也可以找的到b->a的路徑。
+![[SCC_example.png]]
+觀察下圖，如果我們從d點開始做DFS可以照到一個SCC (D->E->F)然後把這個SCC拿掉後，再從A點開始做DFS就又可以找到一個SCC (A->B->C)那這是否代表我們只要用DFS就可以找到SCC呢？ 答案是否定的，如果我們先從A點開始做DFS就會發現找不到SCC了，因為**C到D有連結(向外指)**，所以我們發現選擇起始做DFS的點似乎很重要！！！
+![[DFS_SCC.png]]
+### SCC algorithm
+1. 先任意選一個起始點對整個圖做DFS，紀錄下每個頂點的起始時間跟**結束時間**。
+![[SCC_algo1.png]]
+2. 將邊的方向反轉。
+![[SCC_algo2.png]]
+3. 轉完後再做DFS，但這次從**結束時間最大的頂點** 開始做起，做完後把在同一個SCC的頂點排除後，找結束時間最大的頂點重複以上步驟，直到所有頂點皆被遍歷過。
+![[SCC_algo3.png]]
+結束完上述步驟後所找到的圖我們稱為SCC graph，可以將每個SCC視為一個超大vertex。
+SCC graph的特性：
+* 對於每個大型vertex，start time為大型vertex裡所有小vertex的start time的最小值，finish time則是大vertex裡所有vertex finish time的最大值。
+* SCC graph 一定是一個DAG(Directed acycle graph) ，因為如果有cycle，他會自動變成一個更大的SCC。
+![[SCC_GRAPH.png]]
+### Why the alogorithm works?
+* 為啥我們要從最大的finish time 的vertex開始找？
+首先我們要證明一個引理，就是對一個SCC A 指向一個SCC B時，A.finish>B.finish一定成立。
+![[SCC_lemma.png]]
+這個以分成兩個case討論，是先進到A還是進到B
+* case 1:先進到A再進到B(在第一次DFS裡)
+假設從SCC A裡的v點連到SCCＢ裡的w點，我們可以先簡單的知道結束時間先對關係
+* A_finish >= v_finish
+* B_finish = w_finish
+而頂點之間(v->w)結束時間的先後順序我們已經在DFS tree裡證明過並得知了**v_finish>w_finish**，因此可以得到結論**A_finish>B_finish**。
+* case 2:先到Ｂ才進到Ａ(在第一次DFS裡)
+由於Ｂ沒有可以連結到Ａ的點，因此我們一定是先對Ｂ做完DFS才對Ａ做DFS，因此**A_finish>B_finish**必然成立。
+
+我們可以得到結論，不論是先到Ａ還是先到Ｂ，**A_finish>B.finish**必然發生。
+然後我們會把邊的方向反轉過來，此時B->A，**A_finish>B.finish**　，發現被指向的那個人finish time一定比較大，因此我們先做finish time大的DFS就不會有往外指的箭頭找到不是這個SCC的component了！！！
+從最大的finish time開始找，代表所有的箭頭都指向他，對他做DFS就只能找到互相連通得元件也就是SCC，之後找到的SCC拿掉，再從最大的finish time開始做DFS，直到找完所有的頂點。
+![[SCC_principle.png]]
+* C++ 實做(之後補做)
+```c++
 ```
 # Reference
 [Graph introduction](https://kopu.chat/%E5%AF%A6%E4%BD%9Cgraph%E8%88%87dfs%E3%80%81bfs%E8%B5%B0%E8%A8%AA/)
