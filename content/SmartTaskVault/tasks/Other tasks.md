@@ -1,6 +1,6 @@
 ---
 created: 2025-08-02T23:23
-updated: 2025-10-15T00:03
+updated: 2025-11-04T22:06
 title: Other tasks
 ---
 
@@ -17,5 +17,6 @@ title: Other tasks
 - [x] todolist增加每日任務 #重要度1 ✅ 2025-09-06
 - [ ] 製作日程表
 - [ ] 買濕紙巾 
+- [ ] solidwork軟體購買 #重要度2 
 ---
 

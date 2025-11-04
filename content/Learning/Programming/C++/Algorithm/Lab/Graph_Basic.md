@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-29T20:10
+updated: 2025-11-04T22:00
 title:
 ---
 2025-10-21 22:10
@@ -9,7 +9,20 @@ Status:
 
 Tags:[[Shortest path]]
 
-目錄:
+目錄:- [[#DFS(Depth First Search)|DFS(Depth First Search)]]
+	- [[#DFS(Depth First Search)#PESUDO code of DFS|PESUDO code of DFS]]
+	- [[#DFS(Depth First Search)#DFS runtime|DFS runtime]]
+	- [[#DFS(Depth First Search)#DFS's Application|DFS's Application]]
+- [[#BFS(Breadth First Search)|BFS(Breadth First Search)]]
+	- [[#BFS(Breadth First Search)#PESUDO of BFS|PESUDO of BFS]]
+	- [[#BFS(Breadth First Search)#BFS runtime|BFS runtime]]
+	- [[#BFS(Breadth First Search)#Implementation of BFS|Implementation of BFS]]
+		- [[#Implementation of BFS#1.Shortest path|1.Shortest path]]
+		- [[#Implementation of BFS#2. Bipartite graph(二分圖)|2. Bipartite graph(二分圖)]]
+- [[#SCC (Strongly Connected Compenents)|SCC (Strongly Connected Compenents)]]
+	- [[#SCC (Strongly Connected Compenents)#SCC algorithm|SCC algorithm]]
+	- [[#SCC (Strongly Connected Compenents)#Why the alogorithm works?|Why the alogorithm works?]]
+
 # Graph
 基本名詞介紹
 * Undirectd graphs(無相圖)
@@ -418,7 +431,7 @@ int main(){
 ![[SCC_example.png]]
 觀察下圖，如果我們從d點開始做DFS可以照到一個SCC (D->E->F)然後把這個SCC拿掉後，再從A點開始做DFS就又可以找到一個SCC (A->B->C)那這是否代表我們只要用DFS就可以找到SCC呢？ 答案是否定的，如果我們先從A點開始做DFS就會發現找不到SCC了，因為**C到D有連結(向外指)**，所以我們發現選擇起始做DFS的點似乎很重要！！！
 ![[DFS_SCC.png]]
-### SCC algorithm
+### SCC algorithm(Kosaraju algorithm)
 1. 先任意選一個起始點對整個圖做DFS，紀錄下每個頂點的起始時間跟**結束時間**。
 ![[SCC_algo1.png]]
 2. 將邊的方向反轉。
@@ -453,3 +466,4 @@ SCC graph的特性：
 # Reference
 [Graph introduction](https://kopu.chat/%E5%AF%A6%E4%BD%9Cgraph%E8%88%87dfs%E3%80%81bfs%E8%B5%B0%E8%A8%AA/)
 [list c++](https://shengyu7697.github.io/std-list/)
+[Kosaraju algorithm找SCC]()

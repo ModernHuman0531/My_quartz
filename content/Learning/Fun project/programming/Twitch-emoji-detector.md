@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-21T12:39
+updated: 2025-10-31T22:04
 title:
 ---
 2025-10-20 16:01
@@ -20,3 +20,4 @@ Tags:
 # Reference
 **[clash-royale-emote-detector](https://github.com/jasonli5/clash-royale-emote-detector)**[](https://github.com/jasonli5/clash-royale-emote-detector)
 [Mediapipe 手勢+臉部標誌](https://steam.oxxostudio.tw/category/python/ai/ai-mediapipe-holistic.html)
+[丁神圖奇表情符號網站](https://twitchemotes.com/channels/66548548)

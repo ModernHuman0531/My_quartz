@@ -1,13 +1,13 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-30T20:17
+updated: 2025-11-03T21:14
 title:
 ---
 2025-10-29 16:54
 
 Status:
 
-Tags:[[Graph]]
+Tags:[[Graph_Basic]]
 
 目錄:
 # Shortest path
