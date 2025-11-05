@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-11-04T21:55
+updated: 2025-11-05T22:02
 title:
 ---
 2025-11-01 15:20
@@ -117,7 +117,16 @@ subtask5(圖沒有任何限制)
 1. 找出圖裡所有的SCC
 2. 將每一個SCC視為一個超級節點，此時圖會變成DAG
 3. 用拓普排序找到先後順序
-4. dp
+4. dp(kahn alogrithm):讓我們可以一邊做拓普排序一邊做dp
+kahn 簡單介紹：就是能讓我們一邊做dp一邊做拓普排序的作法，拓普排序本質上就是找到入度的先後順序，起點必定是要入度為0，我們才能確認到該點的值等於他本身的值，從後往前推，而kahn算法，我們紀錄了每個SCC vertex的入度，任何一個入度為0的vertex都可以當作起點，繼續做dp，被連結的vertex會扣掉1個入度，如果入度為0把他push進queue裡，代表已經確定那個SCC vertex最長路徑了，終止條件式存放入度為0的queue變成空的了。
+* SCC細節
+	* 做第一次DFS是紀錄結束點的順序
+	* 第二次對每個點做DFS，在同一個DFS能達到的點代表在同一個SCC裡，走完所有的點就可以找到所有的SCC(所需容器:scc_id 紀錄每個vertex屬於哪個scc,scc_value紀錄每個scc的總共award)
+* DAG細節
+	* 走訪每一個點，有一個`set<pair<int,int>> edges`來存SCC vertex連結狀況，有一個vertex v他的SCC是scc_id[v]，他的連結點u的scc是scc_id[u]，當scc_v!=scc_u時代表兩個scc有連結，把這個邊推進edges裡，如果以後再次發現{scc_v,scc_u} edge不用再推一次，只要知道一次連結就好了
+* DP細節
+	* 先把in_order=0的SCC vertex推進queue裡，queue專門存放in_degree=0的vertex
+實做要注意細節，要注意vector不要越界存取，在存東西進去前請先resize他的大小，這時做很複雜，務必多練習！！！
 # Reference
 [樹直徑算法](https://zhuanlan.zhihu.com/p/115966044)
 [bfs在最短路徑實做](https://oi-wiki.org/graph/bfs/)
