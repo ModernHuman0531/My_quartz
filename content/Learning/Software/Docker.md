@@ -1,3 +1,7 @@
+---
+created: 2025-11-05T22:09
+updated: 2025-11-21T13:16
+---
 <2024-11-08 17:28
 
 Status:
@@ -225,6 +229,20 @@ endif()
 
 endif()
 ```
+
+## Dockerfile packages
+
+### Network(Ping, ip, etc. functions)
+Need to install the following packages:
+* iproute2
+* iputils-ping
+* net-tools
+
+Makefiles corrections
+
+
+## ZSH install(terminal)
+
 # Reference
 [ Docker 基本指令操作](https://ithelp.ithome.com.tw/articles/10186431)
 [docker hub about ros](https://hub.docker.com/_/ros/)

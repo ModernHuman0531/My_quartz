@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-13T19:08
+updated: 2025-11-25T13:42
 title:
 ---
 2025-10-13 17:41
@@ -31,7 +31,7 @@ $$\begin{aligned}
 S_{i}=a_{1}*\dots*a_{n} \\
 而a_{l}*a_{l+1}*\dots*a_{r}=\frac{S_{r}}{S_{l-1}}
 \end{aligned}$$
-XOR的case:[[Lab2]]
+XOR的case:[[Lab 2]]
 ### 差分
 
 # Reference

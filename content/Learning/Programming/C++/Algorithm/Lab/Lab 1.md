@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-30T14:38
+updated: 2025-11-07T21:06
 title:
 ---
 2025-09-15 22:22
@@ -19,6 +19,7 @@ LAB1 assistant answer: [https://www.notion.so/Lab-Solution-Introduction-to-Algor
 * 從成績是不嚴格遞增排序，給一個target score 要找出第一個比x大或跟x一樣成績的學生id，一眼看是二分搜
 * 但他是不會直接給我那個array，而是要我詢問每個位子(index)對應的成績來判斷現在這個index是`l`還是`r`，而當我目標比所有的陣列裡的數都大時會傳-1
 * 解釋為啥binary search能cover到這個case
+* 要找第一大於x的數字，左開右閉，l一開始不能在範圍裡，r一開始就要在範圍裡
 ```
 // 隱藏陣列
 a[5]={1,3,4,7,10},N=5
@@ -62,6 +63,13 @@ l+1=5+1=6=r, stop return r
 		* 最小值出現在不可微點或邊界(?二次函數最低點不是可微嗎？)
 		* 可以用**三分搜找最小值**(不能用二分搜，因為資料不具備單調性)
 * 解法: 
+三分搜:
+找到凸函數的最低點。
+* x的邊界為[l,r]，我們令ml=l+(r-l)/3，mr=r-(r-l)/3
+* 當f(ml)<f(mr)時，代表ml比mr更靠近最低點，此時要將r更新成mr
+* 當f(mr)<=f(ml)，代表mr比ml更靠近最低點，此時將l更新成ml
+c++指定輸出位數：`cout<<fixed<<setprecision(digit_num)<<output;`
+![[trinary_search.png]]
 ## pD
 * 題意: 總共有n道菜，每道菜的分數是`wi`，每道有兩種選擇
 	* 1. 只上一道菜，味道分數為`wi`
@@ -129,6 +137,70 @@ int main(){
 		* 單點: 簡單用for loop計算
 		* combo: 原本是用窮舉出所有可能性在比較，但時間複雜度會爆掉，因此用雙指標，l=0,r=n-1,r_start=r,
 	![[HW1_pD.png]]
+AC code
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+long long k;
+vector<long long> score;
+
+long long f(long long x){
+	// For dish
+	long long count=0;
+	for(long long i:score){
+		if(2*i>=x)
+			count++;
+	}
+
+	// For combo, wrong implrmrnt
+	long long i=0,j=score.size()-1,max_num=score.size()-1;
+	for(;i<max_num;++i){
+		if(i<j){
+			while(score[i]+score[j]>=x)
+				j--;
+		}
+		count+=min((max_num-i),(max_num-j));
+
+	}
+	//cout<<x<<": "<<count<<"\n";
+	return count;
+}
+long long binary_search(){
+	long long l=2*score[0],r=2*score[n-1]+1;
+	while(l+1<r){
+		long long m=(l+r)/2;
+		//cout<<"l="<<l<<"r="<<r<<"\n";
+		if(f(m)>=k){
+			l=m;
+		}
+		else{
+			r=m;
+		}
+	}
+	//cout<<"l="<<l<<"\n";
+	return l;
+}
+int main(){
+	cin>>n>>k;
+	for(int i=0;i<n;++i){
+		long long wi;
+		cin>>wi;
+		score.push_back(wi);
+	}
+	// sort the score vector first
+	sort(score.begin(),score.end());
+
+	long long ans;
+	ans=binary_search();
+
+	if(ans%2)
+		cout<<ans<<"\n"<<2<<"\n";
+	else
+		cout<<ans/2<<"\n"<<1<<"\n";
+	return 0;
+}
+```
 ## pE
 
 ## pF

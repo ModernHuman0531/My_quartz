@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-24T14:42
+updated: 2025-11-08T00:27
 title:
 ---
 2025-10-12 14:38
@@ -26,7 +26,34 @@ a \cdot a^{b-1}, & \text{if $b$ is odd}
 \end{cases}
 \quad \text{(fast exponentiation property)}
 $$
+* dp版本的
+```c++
+#include<bits/stdc++.h>
+using namespace std;
 
+long long dp[20]={0};
+bool visited[20]={0};
+int n,a,b,c;
+
+long long fib(int n){
+	if(n<1) return 0;
+	if(visited[n]) return dp[n];
+	visited[n]=1;
+	return dp[n]=a*fib(n-1)+b*fib(n-2)+c;
+}
+
+int main(){
+	long long f1,f2;
+	cin>>n>>a>>b>>c>>f1>>f2;
+	dp[1]=f1,dp[2]=f2;
+	visited[1]=1,visited[2]=1;
+	long long ans;
+	ans=fib(n);
+	cout<<ans<<"\n";
+	return 0;
+}
+
+```
 ### 想法
 * 原本想說跟先算完`a^b`再取mod，但當`a^b`或`p`太大時，中間結果會爆炸(超過long long 的邊界 10的18次方)，因此要善用模性質
 * 乘法模性質(乘法取模＝先各自取模相乘後再取模)：
@@ -48,7 +75,7 @@ $$(a*b)mod(p)=(amod(p)*bmod(p))mod(p)$$
 2^2mod7
 =(2^1mod7*2^1mod7)mod7
 ```
-* 快速冪利用mod乘法性質實做
+* 快速冪利用mod乘法性質實做(還是要開long long因為可能在過程中就算邊取餘編算還是可能爆int)
 ```c++
 long long my_exp(long long a,long long b,long long p){
 	if(b==0) return 1;//1 mod p一定等於1
@@ -82,6 +109,10 @@ void solve(int row,int current_weight){
 
 ### 方法一
 檢查函數check(row,col)，是用來檢查與之前的皇后位子是否有衝突，第一個方法是傳進去row跟col然後檢查之前column，主對角線跟副對角線
+從第一個row開始放，照著順序放，所以在每個row開始放之前，都要確認以以放過的row跟column每有重複，要看的是column，主對角線，副對角線。
+* column：從vector裡pop出來的值為之前的column，現在要放進去的column不能和之前重複
+* 主對角線：主對角線的性質是**row-column的值會相同**，prev_row-prev_column=row-column的話代表現在要放的點會跟之前放過的主對角線相互攻擊到
+* 副對角線：副對角線的性質是**row+column**的值會相同，當prev_row+prev_column=row+column發生時，代表現在要放的點會跟之前放的副對角線互相攻擊到
 
 ### 方法二(方便之後優化)
 多三個array 來分別紀錄column,主對角線跟副對角線

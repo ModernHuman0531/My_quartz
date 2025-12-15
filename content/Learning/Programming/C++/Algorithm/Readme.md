@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-10-20T19:53
+updated: 2025-11-12T20:20
 title:
 ---
 2025-09-02 21:31
@@ -25,6 +25,7 @@ Tags:
 * [Homework OJ website(當期的)](https://114algo.cs.nycu.edu.tw/)
 * [Homework OJ website(已過期限的)](https://114algo.cs.nycu.edu.tw/archive/)
 * 助教作業詳解:https://www.notion.so/Lab-Solution-Introduction-to-Algorithm-2778f0b8782c800da165e3bdb0590310
+* 在每一題作業寫完後分析背後的演算法，在leetcode or codeforces 上找到相同演算法的題目(1題左右)寫寫看
 ## 基本先備知識(大幅提昇編輯速度)
 *  萬用標頭檔
 	* 在c++中往往要引入很多標頭檔才能使用函數，像是要``<iostream>``才能做輸入輸出，要``<sort>``才能用sort等等
