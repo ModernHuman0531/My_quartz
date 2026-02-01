@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T03:28
-updated: 2025-12-22T00:59
+updated: 2026-01-22T23:30
 title: Studt Tasks
 ---
 ## 任務列表
@@ -38,7 +38,7 @@ title: Studt Tasks
 - [x] ML補充影片(Logistic regression) #重要度1 ✅ 2025-10-16
 - [x] ML generative function note #重要度1 ✅ 2025-10-19
 - [x] ML logistic regression note #重要度2 ✅ 2025-10-20
-- [ ] ML regularization note(week 4) #重要度2  
+- [x] ML regularization note(week 4) #重要度2 ✅ 2026-01-22
 - [ ] ML補充影片(Ensemble-Lec22)
 - [x] ML midterm 1 review(week1-week5) #重要度1 ✅ 2025-10-15
 - [x] ML week2 note(Linear regression) #重要度1 ✅ 2025-09-21
@@ -58,7 +58,7 @@ title: Studt Tasks
 	- [x] Graph(BFS and DFS) #重要度1 ✅ 2025-10-29
 	- [ ] Djkistra(先理論，實做後補) 
 	- [ ] Bellman theory(先理論，實做後補) 
-	- [ ] Dynamic programming #重要度1 
+	- [ ] Dynamic programming #重要度2 
 	- [x] 期中考古 #重要度2 ✅ 2025-10-30
 - [x] 機器人學chap2筆記 #重要度1 ✅ 2025-10-12
 - [x] 機器人學chap3 影片 #重要度1 ✅ 2025-10-29
@@ -68,7 +68,7 @@ title: Studt Tasks
 - [x] 機器人學Project 1(11/13) #重要度2 ✅ 2025-11-12
 - [x] 機器人學HW3(11/13) #重要度3 ✅ 2025-11-12
 - [x] 機器人學HW4(11/27) #重要度1 ✅ 2025-11-24
-- [ ] 機器人學project2(12/26) #重要度3 
+- [x] 機器人學project2(12/26) #重要度3 ✅ 2026-01-22
 - [x] 日本現勢-線上小考quiz2 #重要度1 ✅ 2025-09-22
 - [x] 日本現勢-線上小考quiz3 #重要度3 ✅ 2025-09-29
 - [x] 日本現勢-線上小考quiz4 #重要度1 ✅ 2025-10-20

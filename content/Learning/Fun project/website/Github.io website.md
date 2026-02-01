@@ -1,8 +1,10 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-01-08T18:01
+updated: 2026-01-18T13:24
 title:
 ---
+
+
 2025-09-27 15:12
 
 Status:
@@ -58,3 +60,4 @@ Tags:
 [clone repo](https://github.com/mmistakes/minimal-mistakes)
 [學長的範例](https://github.com/zebra314/zebra314.github.io)
 [yt video](https://www.youtube.com/watch?v=Pof342wGt78)
+[minimal mistake website](https://mmistakes.github.io/minimal-mistakes/docs/layouts/)
