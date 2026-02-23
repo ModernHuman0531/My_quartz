@@ -1,8 +1,12 @@
+---
+created: 2026-02-01T15:50
+updated: 2026-02-01T17:17
+---
 2024-11-08 12:50
 
 Status:
 
-Tags: [[Docker]], [[Launch file]]
+Tags: [[Docker Bug Handle]], [[Launch file]]
 
 # Launch file
 * 傳遞參數的方法

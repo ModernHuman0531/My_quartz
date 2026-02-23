@@ -1,13 +1,17 @@
+---
+created: 2026-02-01T15:50
+updated: 2026-02-03T01:17
+---
 2025-05-13 14:08
 
 Status:
 
-Tags:[[Docker]],[[Launch file]],[[Publisher and Subscrber]],[[CV bridge]], [[AMCL]]
+Tags:[[Docker Bug Handle]],[[Launch file]],[[Publisher and Subscrber]],[[CV bridge]], [[AMCL]]
 
 # Turtlebot3 lane-detection using ROS
 ## Todo list
 
-- [x] Build ros docker and makefile to run ROS in rasberry pi
+- [x] Build ros docker and makefile to run ROS in rasberry pi ✅ 2026-02-03
 - [x] Create node to use video to detect the lane offset and send the message
 - [x] Change the lane detect node from using video to the web camera on raspi
 - [x] Create the node that subscribe lane_offset, use the topic to determine the pwm of right and left wheels and publish the message.
