@@ -1,13 +1,13 @@
 ---
 created: 2025-08-03T14:22
-updated: 2025-09-30T20:44
+updated: 2026-02-26T22:55
 title:
 ---
 2025-09-30 18:33
 
 Status:
 
-Tags:[[Linear regression]], [[Learning/Programming/Machine learning/Homework/Homework 1|Homework 1]]
+Tags:[[Linear regression]], [[Homework 1|Homework 1]]
 
 目錄:
 # Bias and Variance
