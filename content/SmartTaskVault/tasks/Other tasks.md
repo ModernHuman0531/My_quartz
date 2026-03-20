@@ -1,6 +1,6 @@
 ---
 created: 2025-08-02T23:23
-updated: 2026-03-05T18:19
+updated: 2026-03-13T13:36
 title: Other tasks
 ---
 
@@ -38,10 +38,10 @@ title: Other tasks
 - [x] 明天去問鄭教授是否可以抵免訊號與系統 #重要度1 ✅ 2026-03-05
 - [x] 交換獎學金申請(期限到3/9號) #重要度2 ✅ 2026-03-05
 - [x] 寄信給謝秉鈞教授詢問強化學習原理是否開放旁聽(了解強化學習在機器人控制方面的應用，比較方便寫信中闡述) #重要度1 ✅ 2026-02-23
-- [ ] 填寫大阪大學線上申請
-	- [ ] Statement of purpose
-	- [ ] Career goal
-	- [ ] FRONTIERLAB RESEARCH APPLICATION (UNDERGRAD & POSTGRAD) 1/2
-	- [ ] FRONTIERLAB RESEARCH APPLICATION 2/2
+- [x] 填寫大阪大學線上申請 ✅ 2026-03-13
+	- [x] Statement of purpose ✅ 2026-03-11
+	- [x] Career goal ✅ 2026-03-11
+	- [x] FRONTIERLAB RESEARCH APPLICATION (UNDERGRAD & POSTGRAD) 1/2 #重要度1 ✅ 2026-03-13
+	- [x] FRONTIERLAB RESEARCH APPLICATION 2/2 # ✅ 2026-03-13
 ---
 
