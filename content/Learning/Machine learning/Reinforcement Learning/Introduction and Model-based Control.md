@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-03-20T14:57
+updated: 2026-03-24T12:07
 title:
 ---
 2026-03-14 13:35
@@ -430,7 +430,60 @@ $$
 
 
 ### Policy Iteration
+Policy Iteration是透過policy evaluation跟policy improvement交替進行，逐步優化policy，直到找到最佳policy.
+![[Policy_eval.png]]
+1. Policy Evaluation:
+	用任何policy evaluation method來計算在固定policy $\pi_{k}$ 下的$Q^{\pi_{k}}$
+2. Policy Improvement:
+	利用$\pi_{k+1}=\arg\max_{a\in A}Q^{\pi_{k}}(s,a)$這個公式來一遍遍迭代直到收斂，因為在每個state s我們都選能讓他的return 最大化的a，因此我們也稱這個動作為greedy action.
 
+> Policy Iteration
+> 1. Initialize k=0, and set $\pi_{0}(s)$ aribitarily for all state.
+> 2. While k is zero or $\pi{k}\neq\pi_{k+1} \text{(Not converge)}$:
+> 	1. Calculate $Q^{\pi_{k}}$ for fixed policy $\pi_{k}$ (via any policy evaluation method)
+> 	2. Improve the policy by one-step improvement method
+
+> One-step Improvement method
+> Given $V^{\pi_{k}}$,compute $Q^{\pi_{k}}(s,a)$ by Bellman Expectation Equation:
+> $$Q^{\pi_k}(s, a)=R(s, a)+\gamma \sum_s P(s^\prime|s, a) V^{\pi_k}(s^\prime)$$
+> And derive the new policy $\pi_{{k+1}}$ for all state s using greedy action:
+> $$\pi_{k+1} (s) = \arg\max_a Q^{\pi_k}(s,a)$$
+
+為何greedy action能幫助我們得到最佳policy?
+假設我們只按照$\pi_{k+1}$進行一步動作，之後仍按照$\pi$來做動作，這個新的policy會比起原本policy $\pi$來的好
+![[greedy_action.png]]
+(每一個state都選擇最佳的action，最後的policy 就是optimal policy)
+是要可以證明$V^{\pi_{k+1}}(s)\geq V^{\pi_{k}}(s)\text{, for all state s}$。，代表polcy $\pi_{k+1}\geq\pi_{k}$
+<`proof`>
+$$
+\begin{aligned}
+\begin{aligned}
+V^{\pi_k}(s) &\leq \max_a Q^{\pi_k}(s, a)\text{,(Bellman Optimal Equation)}\\
+&= \max_a (R(s,a) + \gamma \sum_{s^\prime \in S} P(s^\prime|s,a)V^{\pi_k}(s^\prime))\text{ ,(Bellman Expectation Equation)} \\
+&= R(s, \pi_{k+1}(s))+\gamma \sum_{s^\prime \in S} P(s^\prime|s,\pi_{k+1}(s))V^{\pi_k}(s^\prime) \text{ ,(greedy action)}\\
+&\leq R(s, \pi_{k+1}(s))+\gamma \sum_{s^\prime \in S} P(s^\prime|s,\pi_{k+1}(s))\max_{a^\prime} Q^{\pi_k}(s^\prime, a^\prime) \\
+&= R(s, \pi_{k+1}(s))+\gamma \sum_{s^\prime \in S} P(s^\prime|s,\pi_{k+1}(s))\\
+&\ \ \ \ \times(R(s^\prime,\pi_{k+1}(s)) + \gamma \sum_{s^{\prime\prime} \in S} P(s^{\prime\prime}|s^\prime,\pi_{k+1}(s^\prime))V^{\pi_k}(s^{\prime\prime})) \\
+&... \\
+&= V^{\pi_{k+1}}(s)
+\end{aligned}
+\end{aligned}
+$$
+#### Discussion of Policy Iteration
+1. Policy Iteration是否能在有限次迭代中收斂至最佳解？(因為value iteration 可能在無限次迭代中仍無法收斂至最佳解)
+	答案是可以的，因為policy的總數是有限的(總共$|A|^{|s|}$種policy，因為是對每個state都選一個action)，因此最多$|A|^{|S|}$次會收斂，且每次的policy iteration都會確保比前一policy更好($\pi_{k+1}\geq \pi_{k}$)
+2. 當$\pi_{k+1}=\pi_{k}$時，$\pi_{k+2}$會長什麼樣子？
+	$$
+	\pi_{k+2}=\arg\max_{a\in A}Q^{\pi^{k+1}(s,a)}=\arg\max_{a\in A}Q^{\pi^{k}(s,a)}=\pi_{k+1}
+	$$
+	代表當$\pi_{k+1}=\pi_{k}$時，policy已經收斂至最佳解，因此也會符合Bellman Optimality Equation:
+	$$
+	V^{\pi_{k}}(s)=\max_{a\in A}Q^{\pi_{k}}(s,a)
+	$$
+
+在policy Iteration的policy improvement公式為：
+$$\pi_{k+1}=\arg\max_{a\in A}Q(s,a)$$
+但往往現實中Q function並非離散的而是連續的，而當我們想要找一個連續函數的最大值時，就要求該函數的導數。而在實際應用時我們會定義loss function跟該如何update policy，這種方法我們就將其稱為[[Policy Gradient]]!!!
 
 ## Regularized MDP
 # Reference

@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-03-09T17:02
+updated: 2026-03-27T13:03
 title:
 ---
 2026-02-01 15:57
@@ -23,3 +23,4 @@ Tags:
 我看有些事寫在dockerfile裡，有些又是用bash來跑指令，而且要用哪個image還不知道，是要先用ubuntu20.04嗎，還是用ros::noetic或是用已經裝好gazebo 版本的image?
 # Reference
 [B站ros1影片](https://www.bilibili.com/video/BV1Ci4y1L7ZZ?spm_id_from=333.788.videopod.sections&vd_source=884c78e6ffadf9f643cedd800db793be&p=229)
+[urdf build robot](https://www.bilibili.com/video/BV1PoZrBBEFC/?spm_id_from=333.788.player.switch&vd_source=884c78e6ffadf9f643cedd800db793be&p=27)

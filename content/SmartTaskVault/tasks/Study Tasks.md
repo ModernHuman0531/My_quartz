@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T03:28
-updated: 2026-03-18T13:26
+updated: 2026-04-23T23:22
 title: Studt Tasks
 ---
 ## 任務列表
@@ -58,7 +58,7 @@ title: Studt Tasks
 	- [x] Graph(BFS and DFS) #重要度1 ✅ 2025-10-29
 	- [ ] Djkistra(先理論，實做後補) 
 	- [ ] Bellman theory(先理論，實做後補) 
-	- [ ] Dynamic programming #重要度2 
+	- [x] Dynamic programming #重要度2 ✅ 2026-03-24
 	- [x] 期中考古 #重要度2 ✅ 2025-10-30
 - [x] 機器人學chap2筆記 #重要度1 ✅ 2025-10-12
 - [x] 機器人學chap3 影片 #重要度1 ✅ 2025-10-29
@@ -91,13 +91,21 @@ title: Studt Tasks
 - [x] 工程材料HW1 #重要度1 ✅ 2026-03-11
 - [x] 準備工材小考1 #重要度1 2026-03-12 18:39 ✅ 2026-03-13
 - [x] 強化學習 pre-lecture hw1 ✅ 2026-03-16
-- [ ] 強化學習 pre-lecture hw2
-- [ ] 強化學習 hw1
-- [ ] 強化學習筆記(MDPs)
-- [ ] 強化學習筆記(Policy Optimization)
-- [ ] 深度學習lab1 
+- [x] 強化學習 pre-lecture hw2 ✅ 2026-03-23
+- [x] 強化學習筆記(MDPs) #重要度1 ✅ 2026-03-24
+- [ ] 強化學習筆記(Policy Optimization) 
 - [ ] 深度學習影片(3/5)
 - [ ] 深度學習影片(3/12)
 - [x] 火箭實做hw1 ✅ 2026-03-16
-- [ ] 生命與生醫-hw1
+- [x] 生命與生醫-hw1(3/30) #重要度1 ✅ 2026-03-29
+- [x] 工程材料hw2 (3/31) ✅ 2026-03-28
+- [x] 工程材料quiz2 (3/26) #重要度2 ✅ 2026-03-28
+- [ ] 火箭實做hw2 (4/3)
+- [ ] 強化學習原理HW1(4/1) + Regularized MDP's note #重要度1 
+- [x] 深度學習HW1 (3/26) #重要度1 ✅ 2026-03-28
+- [ ] 深度學習HW1 report #重要度2 
+- [ ] 強化學習final project
+	- [x] 建立好sumo dockerfile ✅ 2026-04-23
+	- [x] 建立好simple intersection模擬地圖 ✅ 2026-04-23
+	- [ ] 修好sumo-gui裡沒有人行道的bug #重要度1 
 

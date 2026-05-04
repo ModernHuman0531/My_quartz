@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-01-28T18:28
+updated: 2026-03-31T16:44
 title:
 ---
 2026-01-24 18:41
@@ -87,12 +87,30 @@ check-tools:
 ### Step 4. Run the environment
 * 似乎是在.zshrc裡有設定，因此原本應該直接跑`poetry shell`就可以直接入虛擬環境的，但用zsh shell的話跑完指令仍會指向本機的python版本，因此只能直接跑script，用`poetry run python <file_name.py>`
 ### Step 5. Delete virtual environment and cache
-```makefile
-	@rm -rf .venv && (echo "Removed virtual environment.")
+因為有用poetry+.venv+python會產生：
+```
+.venv/                  ← 虛擬環境（最大）
+__pycache__/            ← Python cache
+*.pyc                   ← 編譯檔
+.cache/                 ← 有些套件會用
+.poetry-cache (少見)
+.mypy_cache/
+.pytest_cache/
+```
 
-purge:
-	@poetry cache clear pypi --all && (echo "Cleared Poetry cache.")
-	@poetry run pip cache purge && (echo "Cleared pip cache.")
+```makefile
+clean:
+	@echo "Removing virtual environment..."
+	@rm -rf .venv
+
+	@echo "Removing Python cache..."
+	@find . -type d -name "__pycache__" -exec rm -rf {} +
+	@find . -type f -name "*.pyc" -delete
+
+	@echo "Removing tool caches..."
+	@rm -rf .pytest_cache .mypy_cache .cache
+
+	@echo "Clean complete."
 ```
 * 如果在之後還有想要添加的packages，先在toml 裡的dependicies加入packages名稱跟版本，先用`poetry lock`來跟poetry lock講說toml有變動，它會掃描 pyproject.toml 並重新產生 lock 檔，並利用`poetry install`下載packages，並用`poetry show <package_name>` 確認是否成功安裝
 # Reference
