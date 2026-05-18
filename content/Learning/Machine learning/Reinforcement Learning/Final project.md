@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-04-24T16:00
+updated: 2026-05-06T21:26
 title:
 ---
 2026-03-30 21:44
@@ -95,7 +95,71 @@ netconvert -n single_intersection.nod.xml
 ```
 
 tip:要先定義sidewalks在edge files裡面，否則在connections裡定義crossing時會無法生成
-# Reference
+### Turn Environment into MDP problem
+大致將問題分成兩個檔案來實現
+1. `Traffic_signal.py`:封裝對sumo(simulator)的控制，如何操作SUMO(紅綠燈，lane, vehicles)，與RL無關只是simulator的wrapper，使用traci函式庫來控制，但traci是以參數傳進去的，以下為大致應該實做函數
+	1. `__init__()` :初始化traffic light id, 綠燈時間等參數
+	2. `set_phase()`:負責決定紅綠燈狀態，決定哪邊要切綠燈
+	3. `update()`:負責執行綠燈轉黃燈每個phase的執行
+	4. `get_queue()`:回傳每個方向的queue_length
+	5. `get_waiting_time()`:回傳等待時間
+	6. `get_state_feature()`：整理成可用的數據
+2. `sumo_env.py`:將問題轉為MDP，給RL使用界面。
+	1. `reset()`:重置環境，確保每次的實驗起始一致
+	2. `step()`：apply action -> simulate -> get state ->compute reward -> return (s,r,done)，RL與環境互動的接口
+	3. `_apply_action(action)`：其實就是`traffic_signal.set_phase()`，在一般的RL都是放在step()裡面的，而要拆出來的原因是因為我們之後會加constraint來判斷動作合不合法
+	4. `_get_state()`
+	5. `_compute_reward()`
+	6. `_is_done()`:
+檔案互動：
+```txt
+agent → env.step(action)
+        ↓
+    env._apply_action()
+        ↓
+traffic_signal.set_phase()
+        ↓
+    SUMO simulation
+        ↓
+traffic_signal.get_*()
+        ↓
+    env._get_state()
+        ↓
+    env._compute_reward()
+        ↓
+agent 收到 (state, reward)
+```
+
+1. set_phase():紅綠燈的phase狀態轉換要去查看`.net.xml`檔案，對於基本的問題我是先找到對應的轉換然後直接寫上去，但如果之後要用不同的地圖的話要實做一個範用的方法
+#### Constrain MDP implementation
+在這個project裡，我們的特點是要實行Constrain MDP，也就是當policy nerual network選的一個action後我們要實行，但我們發現他違反了我們的限制，比如說綠燈至少要持續幾秒、最多可以持續幾秒到當場景允許車子轉彎時，與行人衝突到該如何解決(希望意外率趨近於0)。
+而這個該如何設計的想法，對於baseline場景而言：
+* 目前action:
+```txt
+0 → NS 綠
+1 → EW 綠
+```
+* 目前constraint:
+```txt
+1. min_green_time
+2. max_green_time
+```
+所以目前的C(s)=哪些action在state s下是被允許的。
+而合法action在baseline場景裡可能是：
+```txt
+A = {0, 1}
+C(s) 可能是：
+[1, 1]  → 都可以
+[1, 0]  → 只能 NS
+[0, 1]  → 只能 EW
+```
+而實做的順序想法是：
+1. Step 1: 在TrafficSignalEnv裡定義可行性判斷，這層是負責根據內部狀態來算出可行的action，在這層設的原因是包含了current_phase跟phase_timer的內部變數，我們不希望MDP參與，只希望MDP調用就好了
+2. Step 2.:在env裡面的take_action()函數則是負責接收action輸入，然後調用traffic_signal裡面回傳的valid_action，看被傳入的action有沒有在valid_action裡，如果有就可以take那個action，如果沒有我們再維護一個函數叫`handle_invalid_action()`
+3. Step 3.:在`handle_invalide_action()`裡，應該從valid_action隨機選擇可以執行的action再回傳
+
+
+ # Reference
 [SUMO simulation docker](https://sumo.dlr.de/docs/Tutorials/Containerized_SUMO.html)
 [Docker run command](https://hackmd.io/@joshhu/H1467RoUt)
 [Reference repo](https://github.com/LucasAlegre/sumo-rl)
@@ -103,3 +167,4 @@ tip:要先定義sidewalks在edge files裡面，否則在connections裡定義cros
 [官方文件介紹各類.xml檔案該如何定義](https://sumo.dlr.de/docs/Networks/PlainXML.html)
 [SUMO基礎用法簡介](https://hsuanchih-wang.medium.com/sumo-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8-3-3-%E9%96%8B%E5%A7%8B%E6%A8%A1%E6%93%AC%E5%90%A7-89a3cfced6d7)
 [SUMO abstract vehicles default parameters](https://sumo.dlr.de/docs/Vehicle_Type_Parameter_Defaults.html)
+[Traci使用手冊](https://sumo.dlr.de/docs/TraCI/Interfacing_TraCI_from_Python.html)

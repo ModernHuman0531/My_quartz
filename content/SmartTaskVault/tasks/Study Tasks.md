@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T03:28
-updated: 2026-04-23T23:22
+updated: 2026-05-15T14:04
 title: Studt Tasks
 ---
 ## 任務列表
@@ -101,11 +101,16 @@ title: Studt Tasks
 - [x] 工程材料hw2 (3/31) ✅ 2026-03-28
 - [x] 工程材料quiz2 (3/26) #重要度2 ✅ 2026-03-28
 - [ ] 火箭實做hw2 (4/3)
-- [ ] 強化學習原理HW1(4/1) + Regularized MDP's note #重要度1 
+- [x] 強化學習原理HW1(4/1) + Regularized MDP's note #重要度1 ✅ 2026-05-15
 - [x] 深度學習HW1 (3/26) #重要度1 ✅ 2026-03-28
 - [ ] 深度學習HW1 report #重要度2 
 - [ ] 強化學習final project
 	- [x] 建立好sumo dockerfile ✅ 2026-04-23
 	- [x] 建立好simple intersection模擬地圖 ✅ 2026-04-23
-	- [ ] 修好sumo-gui裡沒有人行道的bug #重要度1 
+	- [x] 修好sumo-gui裡沒有人行道的bug #重要度1 ✅ 2026-05-15
+	- [x] 將branch整合到同一個main brach裡 #重要度1 ✅ 2026-05-15
+	- [ ] 建立新的十字路口讓車子可以右轉 #重要度1 
+- [x] 工程材料HW4 ✅ 2026-05-15
+- [ ] 生命與生醫期末報告 #重要度2 
+- [ ] 強化學習HW3 
 

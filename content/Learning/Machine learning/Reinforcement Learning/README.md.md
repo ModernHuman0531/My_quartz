@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-03-13T22:56
+updated: 2026-05-18T12:17
 title:
 ---
 2026-01-28 02:03
@@ -10,7 +10,7 @@ Status:
 Tags:
 目錄(ctrl+p):
 # README.md
-這學期旁聽了交大謝秉鈞教授的強化學習原理，做課程筆記。
+這學期修習了交大謝秉鈞教授的強化學習原理，做課程筆記。
 
 <div style="background-color: #2894FF; padding: 10px;">
 	**ee**
@@ -22,3 +22,4 @@ Tags:
 # Reference
 [交大強化學習 學長筆記](https://hackmd.io/@tsen159/RLNote)
 [強化學習的數學原理 西湖大學](https://www.youtube.com/watch?v=TGIBuBd-V6I)
+
