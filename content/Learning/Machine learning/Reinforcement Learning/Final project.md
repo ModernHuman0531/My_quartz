@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-05-06T21:26
+updated: 2026-06-09T21:56
 title:
 ---
 2026-03-30 21:44
@@ -95,6 +95,72 @@ netconvert -n single_intersection.nod.xml
 ```
 
 tip:要先定義sidewalks在edge files裡面，否則在connections裡定義crossing時會無法生成
+
+### 如何狀態字串
+以`3*3.net.xml`為例，因為RL是藉由控制紅綠燈作為action的，因此搞清楚每個action的state代表路口是什麼狀態很重要！
+```xml
+    <tlLogic id="B1" type="static" programID="0" offset="0">
+        <phase duration="42" state="GGGggrrrrrGGGggrrrrr"/>
+        <phase duration="3"  state="yyyyyrrrrryyyyyrrrrr"/>
+        <phase duration="42" state="rrrrrGGGggrrrrrGGGgg"/>
+        <phase duration="3"  state="rrrrryyyyyrrrrryyyyy"/>
+    </tlLogic>
+```
+
+字串中的每一個字母，代表路口中某一個特定衝突點（車道轉向或行人斑馬線）在該時相（Phase）的燈號。 在你的設定中，`state` 的長度是 **20 個字元**（例如 `GGGggrrrrrGGGggrrrrr`），這代表整個 `B1` 路口總共有 **20 個受紅綠燈控制的對象**（包含車道連結與行人穿越道）。
+
+我們不需要擔心車子不會禮讓行人了，因為SUMO已經內建已經有轉彎的車子會裡讓行人了！！！
+
+字母的定義如下：
+- **`G` (長綠燈/大綠燈)**：擁有絕對優先權（Priority green），車流或行人可以直接通過，不需禮讓。
+- **`g` (防護綠燈/小綠燈)**：允許通行，但**需要禮讓**擁有 `G` 路權的對向車流或斑馬線上的行人（Permissive green）。這通常出現在「左轉車道」上。
+- **`r` (紅燈)**：禁止通行。
+- **`y` (黃燈)**：準備轉換燈號，清空路口。
+
+SUMO 排序這 20 個字元（索引 0 到 19）是有固定邏輯的，它會由「北方（North）」開始，依順時針方向（北 $\rightarrow$ 東 $\rightarrow$ 南 $\rightarrow$ 西）繞路口一圈來編號。
+
+對於每一個方向，它會先編號**車道（Vehicles）**，接著再編號該方向的**行人斑馬線（Crossings）**。
+
+根據你在 `generate_network.py` 中的設定（每個方向 2 車道，包含 sidewalk 和 crossings），這 20 個字元的具體對應順序通常如下：
+
+#### 🟢 北方入口 (由北往南進路口，由 B2 往 B1) —— 索引 0 ~ 4
+
+- **0**: 右轉 + 直行車道（前往 B0） $\rightarrow$ `G`
+    
+- **1**: 左轉車道（前往 C1） $\rightarrow$ `g`（需禮讓對向直行）
+    
+- **2**: 該方向的右轉/直行車道與其他衝突（有些狀況下 SUMO 會拆分內部虛擬連接）
+    
+- **3 & 4**: 北側的行人穿越道（Crossing）或相關的行人/車流連結。
+    
+
+#### 🟢 東方入口 (由東往西進路口，由 C1 往 B1) —— 索引 5 ~ 9
+
+- **5**: 右轉 + 直行車道（前往 A1） $\rightarrow$ `r`
+    
+- **6**: 左轉車道（前往 B0） $\rightarrow$ `r`
+    
+- **7, 8, 9**: 東側的車流內部連接與行人穿越道。
+    
+
+#### 🟢 南方入口 (由南往北進路口，由 B0 往 B1) —— 索引 10 ~ 14
+
+- **10**: 右轉 + 直行車道（前往 B2） $\rightarrow$ `G`
+    
+- **11**: 左轉車道（前往 A1） $\rightarrow$ `g`
+    
+- **12, 13, 14**: 南側的車流內部連接與行人穿越道。
+    
+
+#### 🟢 西方入口 (由西往東進路口，由 A1 往 B1) —— 索引 15 ~ 19
+
+- **15**: 右轉 + 直行車道（前往 C1） $\rightarrow$ `r`
+    
+- **16**: 左轉車道（前往 B2） $\rightarrow$ `r`
+    
+- **17, 18, 19**: 西側的車流內部連接與行人穿越道。
+
+
 ### Turn Environment into MDP problem
 大致將問題分成兩個檔案來實現
 1. `Traffic_signal.py`:封裝對sumo(simulator)的控制，如何操作SUMO(紅綠燈，lane, vehicles)，與RL無關只是simulator的wrapper，使用traci函式庫來控制，但traci是以參數傳進去的，以下為大致應該實做函數
@@ -158,6 +224,12 @@ C(s) 可能是：
 2. Step 2.:在env裡面的take_action()函數則是負責接收action輸入，然後調用traffic_signal裡面回傳的valid_action，看被傳入的action有沒有在valid_action裡，如果有就可以take那個action，如果沒有我們再維護一個函數叫`handle_invalid_action()`
 3. Step 3.:在`handle_invalide_action()`裡，應該從valid_action隨機選擇可以執行的action再回傳
 
+Problem to solve: 
+ 1. Seperate the pedestrian and car traffic light.
+ 2. Make a new world that allows the car to turn right
+
+### 講稿
+我是負責講述
 
  # Reference
 [SUMO simulation docker](https://sumo.dlr.de/docs/Tutorials/Containerized_SUMO.html)

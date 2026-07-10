@@ -1,6 +1,6 @@
 ---
 created: 2025-08-02T23:23
-updated: 2026-03-13T13:36
+updated: 2026-06-12T23:36
 title: Other tasks
 ---
 
@@ -43,5 +43,9 @@ title: Other tasks
 	- [x] Career goal ✅ 2026-03-11
 	- [x] FRONTIERLAB RESEARCH APPLICATION (UNDERGRAD & POSTGRAD) 1/2 #重要度1 ✅ 2026-03-13
 	- [x] FRONTIERLAB RESEARCH APPLICATION 2/2 # ✅ 2026-03-13
+	- [x] part 2申請資料填寫 #重要度1 ✅ 2026-06-05
+- [x] 填寫CoE申請資料(6/12之前必須完成) #重要度1 ✅ 2026-06-12
+- [x] 填寫交換前資料 ✅ 2026-06-12
+- [x] 暑宿申請(6/10開始可以申請) ✅ 2026-06-12
 ---
 
