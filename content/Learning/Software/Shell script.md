@@ -1,3 +1,7 @@
+---
+created: 2026-07-10T23:54
+updated: 2026-07-18T23:44
+---
 2024-11-21 15:44
 
 Status:
@@ -174,7 +178,11 @@ arg3
 | `-z`             |          |
 | `-f <file name>` |          |
 | `-x`             |          |
+
+### Parameter expansion
+* `${parameter:-word}`:若變數尚未設置或為空，則用`word`來代替
+* `${parameter:=word}`:若變數尚未設置或為空，則將其賦值等於word並回傳
 # Reference:
 [self-defines function](https://shengyu7697.github.io/shell-script-function/)
 [grep reference](https://blog.gtwang.org/linux/linux-grep-command-tutorial-examples/)
-[find reference](https://blog.gtwang.org/linux/unix-linux-find-command-examples/)
+[find reference](https://blog.gtwang.org/linux/unix-linux-find-command-examples/)[shell script入門基本語法](https://hackmd.io/@IZnjXszaSPi51yF7CenIgw/Sk4g_BQa8)

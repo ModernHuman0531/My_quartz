@@ -1,13 +1,13 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-07-10T23:52
+updated: 2026-07-20T18:22
 title:
 ---
 2026-06-20 12:33
 
 Status:
 
-Tags:[[Nvim]],[[Kitty terminal emulator]]
+Tags:[[Nvim]],[[Kitty terminal emulator]],[[rofi]],[[Waybar]]
 目錄(ctrl+p):
 # Hyprland
 我是參考下面的repo來作為hyprland的範例，因為我覺得一開始全都要自己設定實在是太難了，不如我先有其他人設定檔來參考，先摸熟並修改內容後等之後在做出自己的設定檔。
@@ -47,8 +47,9 @@ env = SDL_IM_MODULE, fcitx
 env = GLFW_IM_MODULE, ibus
 ```
 ## 螢幕
+### 方法一(嚴重延遲問題)
 我想在有外接螢幕時只用外接螢幕，而沒有外接螢幕實在切換到內建螢幕。
-先在`user/monitors.conf`加上兩個螢幕的定義
+在`user/monitors.conf`加上兩個螢幕的定義
 ```conf
 # Auto-generated Config
 
@@ -63,6 +64,7 @@ monitor = eDP-1, 1920x1080@144.42, 0x0, 1.5
 monitor = HDMI-A-1, 2560x1440@144, 0x0, 1
 
 ```
+把在monitors.conf裡定義的註解掉，螢幕的控制全權交給下面的script來控制。
  在寫一個腳本讓他偵測現在是否有連結外接螢幕：
  ```zsh
  #!/usr/bin/env zsh
@@ -108,6 +110,34 @@ fi
 	3. **白話解釋**：這是一個**無窮迴圈的監聽器**。
 		- 插上 HDMI $\rightarrow$ 產生 `monitoradded` $\rightarrow$ 被 `grep` 抓到 $\rightarrow$ 觸發腳本 $\rightarrow$ 關內建、開外接。
 		- 拔掉 HDMI $\rightarrow$ 產生 `monitorremoved` $\rightarrow$ 被 `grep` 抓到 $\rightarrow$ 觸發腳本 $\rightarrow$ 開內建。
+這表示不是 script 本身有 bug，而是 **你把唯一還在輸出的 monitor 關掉了，Hyprland 沒有來得及重新啟用 eDP-1**。
+為什麼會這樣？
+流程目前是：
+
+```
+插 HDMI
+↓
+script
+↓
+disable eDP-1
+↓
+只剩 HDMI
+```
+然後拔 HDMI：
+```
+HDMI 消失
+↓
+唯一 active monitor 消失
+↓
+Hyprland 已經沒有任何輸出
+↓
+socket event/script 可能根本來不及執行或無法恢復畫面
+```
+所以就黑屏了。
+
+### 方法二：使用kanshi package
+放棄使用腳本直接控制，轉而使用kanshi來定義workspace，disable一個螢幕風險還是太大了，因此轉而定義內建與外接螢幕各自workspace的位置，內建螢幕就擔任workspace 1其他的workspace都放在外接螢幕，當HDMI線拔掉時workspace也會自動跑回內建螢幕裡。
+
 ## 音訊問題
 可以使用`pavucontrol`查看是否有背景音訊音訊，當我們從kde轉到hyprland時，kde的音訊後端沒有把硬體控制權乾淨地釋放出來，導致hyprland的PipeWire去存取硬體時直接撞牆，表面上雖然顯示，但底層的音訊通道其實已經斷掉了(所以不管是Youtube還是ncspot都發不出聲音)。
 步驟1：強制重起用戶級systemd音訊服務
@@ -128,6 +158,7 @@ sudo pacman -Ss qt5-wayland qt6-wayland
 ```
 ### Word
 推薦使用WPS office 來打開
+
 ## 想要的功能
 - [x] 用Waybar來做上面的功能欄(可以添加wifi選擇欄功能 (https://github.com/LifeOfATitan/orbit)) ✅ 2026-07-07
 - [x] Waybar切換windows時動畫 ✅ 2026-07-08
@@ -139,13 +170,21 @@ sudo pacman -Ss qt5-wayland qt6-wayland
 - [x] 換掉現有hyprlock.conf，找網路上是否有參考的packages[參考repo](https://github.com/xCaptaiN09/pixie-sddm) ✅ 2026-07-08
 `sudo systemctl enable sddm.service`
 
-- [ ] 加一個widget在旁邊顯示撥放的專輯或是影片封面使用[eww](https://elkowar.github.io/eww/)
+- [x] 加一個widget在旁邊顯示撥放的專輯或是影片封面使用[eww](https://elkowar.github.io/eww/)，寫完記得要測試換wallpaper可不可以用，如果不行要重作 ✅ 2026-07-18
 - [x] fastfetch更改內容(https://github.com/itsfoss/text-script-files/tree/master/config/fastfetch) ✅ 2026-07-09
+- [x] 用rofi做出換桌布的功能 ✅ 2026-07-18
+- [ ] 了解rofi換桌布的shell是怎麼寫的，有些邏輯不懂(尤其是縮圖部份
+- [x] nvim添加自動補全插件([hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)) ✅ 2026-07-20
+- [x] 優化eww music displayer(可以參考我在網路上找到的酷[repo](https://github.com/abod8639/eww-music-widget)) ✅ 2026-07-20
+- [x] 在waybar上添加新的功能 ✅ 2026-07-20
+- [ ] 修理hyprlock issue(完全法克一直發生)
 
-
+## Media playing info
+可以使用`playerctl metadata` 來顯示出目前這在播訪的詳細資料，包括作家、歌曲名稱等。
 ## Bug fixed
 
 ### Screen locked issue
+不一定是hyprlock的問題，有可能他找不到hyprlock在哪裡
 
 ### 音訊在重開機時會斷掉
 原因：PipeWire重啟了兩次，一次是在systemmd裡啟動，一次是在hyprland裡的autostart又寫了啟動一次。

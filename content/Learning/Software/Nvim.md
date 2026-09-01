@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T14:22
-updated: 2026-07-10T22:51
+updated: 2026-07-20T14:09
 title:
 ---
 1  2026-06-29 21:17
@@ -37,7 +37,7 @@ vim.keymap.set('{模式}', '{你按下的鍵}', '{觸發的功能}', { 額外參
 	* 'i': insert mode
 	* {'v','n'}:多個mode用大括號包住
 2. 你按下的按鍵
-	在鍵盤上敲擊的組合
+	- 在鍵盤上敲擊的組合
 	* `<Leader>`: Vim著名的前綴鍵(預設通常是space鍵)
 	* `<C-a>`:代表ctrl+a
 	* `<A-k>`:代表Alt+k
@@ -116,3 +116,4 @@ vim.keymap.set('{模式}', '{你按下的鍵}', '{觸發的功能}', { 額外參
 [Refernece setup video](https://www.youtube.com/watch?v=zkOEdhfwXok)
 [Vim plug readme file](https://github.com/junegunn/vim-plug)
 [Neovim plugin 大全](https://github.com/rockerBOO/awesome-neovim)
+[Nvim-cmp 自動補全插件](https://www.youtube.com/watch?v=gK31IVy0Gp0)
