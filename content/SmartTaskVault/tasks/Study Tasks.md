@@ -1,6 +1,6 @@
 ---
 created: 2025-08-03T03:28
-updated: 2026-06-13T00:20
+updated: 2026-09-18T21:07
 title: Studt Tasks
 ---
 ## 任務列表
@@ -103,7 +103,7 @@ title: Studt Tasks
 - [x] 火箭實做hw2 (4/3) ✅ 2026-06-13
 - [x] 強化學習原理HW1(4/1) + Regularized MDP's note #重要度1 ✅ 2026-05-15
 - [x] 深度學習HW1 (3/26) #重要度1 ✅ 2026-03-28
-- [ ] 深度學習HW1 report #重要度2 
+- [x] 深度學習HW1 report #重要度2 ✅ 2026-09-18
 - [ ] 強化學習final project
 	- [x] 建立好sumo dockerfile ✅ 2026-04-23
 	- [x] 建立好simple intersection模擬地圖 ✅ 2026-04-23
